@@ -1,15 +1,16 @@
 {
-  "name": "Timer Boxe Maison",
-  "short_name": "Boxe",
-  "description": "Timer d'entraînement boxe et renforcement à domicile",
+  "name": "Capyra — Sport Maison",
+  "short_name": "Capyra",
+  "description": "Coach sportif à domicile : timer, programmes personnalisés et suivi — Capy mind, Happy life",
   "start_url": "./boxing_timer.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#111827",
+  "background_color": "#F4EDE6",
+  "theme_color": "#6E4E3A",
   "lang": "fr",
   "icons": [
+    { "src": "logo.png", "sizes": "400x400", "type": "image/png", "purpose": "any" },
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

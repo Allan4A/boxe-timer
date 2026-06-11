@@ -3,46 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timer Boxe Maison</title>
+<title>Capyra · Sport Maison</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#111827">
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="theme-color" content="#6E4E3A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
+  /* Charte Capyra — brun chaud, sable crème, vert sauge, corail, anthracite */
   :root {
-    --shadow: #7c3aed;
-    --round: #ea580c;
-    --circuit: #db2777;
-    --cardio: #d97706;
-    --rest: #6b7280;
-    --bg: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --highlight: #dbeafe;
-    --tile: #f9fafb;
-    --tile2: #f3f4f6;
+    --shadow: #5F8F7B;
+    --round: #FF6B4A;
+    --circuit: #6E4E3A;
+    --cardio: #C97B4A;
+    --rest: #A39888;
+    --brand: #6E4E3A;
+    --cta: #FF6B4A;
+    --bg: #F4EDE6;
+    --text: #2E2E2E;
+    --muted: #8A7468;
+    --border: #E6E3DF;
+    --highlight: #FFE3DA;
+    --tile: #FBF7F1;
+    --tile2: #E6E3DF;
   }
   body[data-theme="dark"] {
-    --bg: #0f172a;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
-    --border: #334155;
-    --highlight: #1e3a5f;
-    --tile: #1e293b;
-    --tile2: #1e293b;
+    --brand: #D8B89C;
+    --bg: #2E2E2E;
+    --text: #F4EDE6;
+    --muted: #BBAE9F;
+    --border: #4A443C;
+    --highlight: #5A3A2C;
+    --tile: #3A352F;
+    --tile2: #3A352F;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     transition: background .2s, color .2s;
   }
   .app { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
-  h1 { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 14px; letter-spacing: -0.01em; }
+  h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.3rem; font-weight: 700;
+    letter-spacing: -0.01em; color: var(--brand); margin: 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand img { width: 46px; height: 46px; border-radius: 12px; }
+  .tagline { font-size: 0.72rem; color: var(--muted); font-style: italic; }
+  .phase-name, .time-display, .controls button, .program-select button,
+  .stat-tile .v, .finish-screen h2, .finish-screen button, #profileScreen h2,
+  .profile-card .pc-name { font-family: "Poppins", sans-serif; }
+  .ps-logo { width: 110px; height: 110px; border-radius: 26px; }
+  .ps-tagline { font-size: 0.85rem; color: var(--muted); font-style: italic; }
   /* Sélecteur de programme */
   .program-select { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
   .program-select button {
@@ -52,7 +72,7 @@
     color: var(--muted); cursor: pointer; transition: all .15s; line-height: 1.25;
   }
   .program-select button .p-min { display: block; font-size: 0.7rem; font-weight: 500; opacity: .8; }
-  .program-select button.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .program-select button.active { background: var(--circuit); border-color: var(--circuit); color: #F4EDE6; }
   /* Toggles, intensité, durée */
   .toggles, .intensity { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
   .toggles button, .intensity button {
@@ -62,8 +82,8 @@
     color: var(--muted); cursor: pointer;
   }
   .intensity button { flex: 1 1 auto; }
-  .toggles button.on { color: var(--text); border-color: var(--text); }
-  .intensity button.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .toggles button.on { color: var(--brand); border-color: var(--brand); }
+  .intensity button.active { background: var(--circuit); border-color: var(--circuit); color: #F4EDE6; }
   .dur-info { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; text-align: center; }
   .prog-banner {
     font-size: 0.78rem; color: var(--muted);
@@ -147,8 +167,8 @@
     font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity .15s;
   }
   .controls button:active { opacity: 0.8; }
-  #btnMain { background: var(--text); color: var(--bg); flex: 2; }
-  #btnMain.running { background: #d97706; color: #fff; }
+  #btnMain { background: var(--cta); color: #fff; flex: 2; }
+  #btnMain.running { background: #5F8F7B; color: #fff; }
   #btnSkip, #btnReset { background: var(--tile2); color: var(--text); }
   /* Liste des phases */
   .phase-list-title {
@@ -227,7 +247,7 @@
   .finish-screen .f-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   .finish-screen button {
     padding: 12px 24px; border: none; border-radius: 12px;
-    background: var(--text); color: var(--bg); font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    background: var(--cta); color: #fff; font-size: 0.95rem; font-weight: 700; cursor: pointer;
   }
   .finish-screen #btnSaveNote { background: var(--tile2); color: var(--text); }
   .hidden { display: none; }
@@ -266,13 +286,21 @@
 </head>
 <body>
 <div id="profileScreen">
+  <img src="logo.png" alt="Capyra" class="ps-logo">
   <h2>Qui s'entraîne ?</h2>
   <div class="profile-cards" id="profileCards"></div>
+  <div class="ps-tagline">« Capy mind, Happy life »</div>
 </div>
 
 <div class="app">
   <div class="header">
-    <h1>🥊 Timer Boxe Maison</h1>
+    <div class="brand">
+      <img src="logo.png" alt="Capyra">
+      <div>
+        <h1>Capyra</h1>
+        <div class="tagline">Capy mind, Happy life</div>
+      </div>
+    </div>
     <button id="btnProfile" title="Changer de profil">👤</button>
   </div>
 

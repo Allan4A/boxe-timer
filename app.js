@@ -267,7 +267,8 @@ const PROFILES = {
   }
 };
 
-const TAG_COLORS = { shadow: "#7c3aed", round: "#ea580c", circuit: "#db2777", cardio: "#d97706", rest: "#6b7280" };
+/* Palette Capyra : sauge (technique), corail (rounds/sport), brun chaud (renfo), terracotta (cardio), gris chaud (repos) */
+const TAG_COLORS = { shadow: "#5F8F7B", round: "#FF6B4A", circuit: "#6E4E3A", cardio: "#C97B4A", rest: "#A39888" };
 const TAGS = ["shadow", "round", "circuit", "cardio", "rest"];
 const PREP_DUR = 5;
 const INTENSITY = {
@@ -1071,11 +1072,20 @@ function finishSession() {
   renderStats();
   const wkNow = weekKey(new Date());
   const n = history.filter(h => weekKey(h.d) === wkNow).length;
-  $("finishMsg").textContent = "Séance " + n + " cette semaine — " +
+  const DEVISES = [
+    "Le progrès, c'est capytal.",
+    "Capytalise sur la durée.",
+    "Un pas de capybara à la fois.",
+    "Capy zen, capy fit.",
+    "Capy ou pas capy, tu avances.",
+    "Sois capyble."
+  ];
+  const devise = DEVISES[Math.floor(Math.random() * DEVISES.length)];
+  $("finishMsg").textContent = "« " + devise + " » — Séance " + n + " cette semaine, " +
     Math.round(total / 60) + " min. Hydrate-toi et récupère.";
   $("noteInput").value = "";
   $("btnSaveNote").textContent = "Enregistrer la note";
-  speak("Séance terminée. Bien joué !");
+  speak("Séance terminée. " + devise);
   elMainView.classList.add("hidden");
   elFinish.classList.add("visible");
 }

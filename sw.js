@@ -1,5 +1,5 @@
-const CACHE = "boxe-timer-v5";
-const ASSETS = ["./", "./index.html", "./boxing_timer.html", "./app.js", "./manifest.webmanifest", "./icon.svg"];
+const CACHE = "boxe-timer-v6";
+const ASSETS = ["./", "./index.html", "./boxing_timer.html", "./app.js", "./manifest.webmanifest", "./icon.svg", "./logo.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
