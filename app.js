@@ -255,12 +255,12 @@ const PROGRAMS_LIORA = {
 /* ============ PROFILS ============ */
 const PROFILES = {
   allan: {
-    name: "Allan", avatar: "🥊", color: "#ea580c",
+    name: "Allan", avatar: "🥊", color: "#FF6B4A",
     programs: PROGRAMS_ALLAN, progression: true, allowHard: true,
     defaultProgram: "complet", note: null
   },
   liora: {
-    name: "Liora", avatar: "🧘‍♀️", color: "#7c3aed",
+    name: "Liora", avatar: "🧘‍♀️", color: "#5F8F7B",
     programs: PROGRAMS_LIORA, progression: false, allowHard: false,
     defaultProgram: "complet",
     note: "🤰 Séances adaptées à la grossesse : reste toujours en aisance respiratoire (tu dois pouvoir parler), hydrate-toi, évite la surchauffe. Stoppe en cas de douleur, contraction, vertige ou essoufflement inhabituel. Programme à faire valider par ta sage-femme ou ton médecin."
