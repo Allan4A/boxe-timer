@@ -215,6 +215,33 @@
   }
   .finish-screen #btnSaveNote { background: var(--tile2); color: var(--text); }
   .hidden { display: none; }
+  /* Écran de sélection de profil */
+  #profileScreen {
+    position: fixed; inset: 0; background: var(--bg); z-index: 50;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  }
+  #profileScreen.hidden { display: none; }
+  #profileScreen h2 { font-size: 1.4rem; font-weight: 700; }
+  .profile-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; padding: 0 16px; }
+  .profile-card {
+    width: 132px; padding: 18px 10px; border: 1px solid var(--border);
+    border-radius: 16px; text-align: center; cursor: pointer;
+    background: var(--tile); transition: transform .15s, border-color .15s;
+  }
+  .profile-card:hover { transform: scale(1.05); border-color: var(--text); }
+  .profile-card .pc-avatar {
+    width: 84px; height: 84px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.8rem; margin: 0 auto 10px; color: #fff;
+  }
+  .profile-card .pc-name { font-weight: 700; }
+  /* En-tête avec bouton profil */
+  .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .header h1 { margin: 0; }
+  #btnProfile {
+    border: 1px solid var(--border); background: var(--tile);
+    border-radius: 10px; font-size: 1.25rem; padding: 4px 10px; cursor: pointer;
+  }
   @media (max-width: 420px) {
     .time-display { font-size: 3.4rem; }
     .program-select button { flex: 1 1 45%; }
@@ -222,8 +249,16 @@
 </style>
 </head>
 <body>
+<div id="profileScreen">
+  <h2>Qui s'entraîne ?</h2>
+  <div class="profile-cards" id="profileCards"></div>
+</div>
+
 <div class="app">
-  <h1>🥊 Timer Boxe Maison</h1>
+  <div class="header">
+    <h1>🥊 Timer Boxe Maison</h1>
+    <button id="btnProfile" title="Changer de profil">👤</button>
+  </div>
 
   <div class="program-select" id="programSelect"></div>
 

@@ -1,10 +1,8 @@
 "use strict";
 
-/* ============ PROGRAMMES ============
-   Matériel : KB 10 kg, sandbag 30 kg, haltères 10 kg, élastiques 5/15/40 kg.
-   Pas de sac de frappe : la boxe se fait en shadow (rounds).
-   Les repos précédant un changement de matériel servent de temps d'installation. */
-const PROGRAMS = {
+/* ============ PROGRAMMES — ALLAN ============
+   Matériel : KB 10 kg, sandbag 30 kg, haltères 10 kg, élastiques 5/15/40 kg. */
+const PROGRAMS_ALLAN = {
   complet: {
     label: "Complet",
     phases: [
@@ -147,6 +145,128 @@ const PROGRAMS = {
   }
 };
 
+/* ============ PROGRAMMES — LIORA (grossesse, 2e trimestre) ============
+   Règles : pas de charges lourdes (élastiques 5/15 kg et poids du corps uniquement),
+   pas de sauts ni d'impacts, pas d'exercices allongée sur le dos, pas de crunchs,
+   intensité modérée (toujours en aisance respiratoire), gainage doux uniquement. */
+const LIORA_ABDOS = [
+  { name: "Abdos doux — Bird-dog", tag: "circuit", dur: 40, desc: "À 4 pattes : bras et jambe opposés tendus, dos neutre, sans cambrer" },
+  { name: "Repos", tag: "rest", dur: 15, desc: "Respire tranquillement" },
+  { name: "Abdos doux — Gainage latéral genoux (gauche)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur les genoux, bassin aligné" },
+  { name: "Repos", tag: "rest", dur: 15, desc: "Change de côté" },
+  { name: "Abdos doux — Gainage latéral genoux (droite)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur les genoux, bassin aligné" },
+  { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+  { name: "Respiration & périnée", tag: "circuit", dur: 60, desc: "Bascules de bassin douces + respiration profonde, engage le périnée à l'expiration" }
+];
+const PROGRAMS_LIORA = {
+  complet: {
+    label: "Complet",
+    phases: [
+      { name: "Échauffement mobilité", tag: "cardio", dur: 300, desc: "Marche sur place, rotations épaules, cercles de bassin, chevilles" },
+      { name: "Boxe douce — shadow léger", tag: "shadow", dur: 180, desc: "Jab-cross lents et ludiques, sans impact, déplacements souples" },
+      { name: "Installation", tag: "rest", dur: 20, desc: "Prépare les élastiques 5 et 15 kg et une chaise solide" },
+      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appuie-toi à la chaise si besoin" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit, épaules basses" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Bras à l'horizontale maximum, sans à-coups" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, une main sur la chaise pour l'équilibre" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, bois une gorgée" },
+      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appuie-toi à la chaise si besoin" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit, épaules basses" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Bras à l'horizontale maximum, sans à-coups" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, une main sur la chaise pour l'équilibre" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis pour le sol" }
+    ].concat(LIORA_ABDOS, [
+      { name: "Marche récupération", tag: "cardio", dur: 120, desc: "Marche tranquille, bras relâchés, respiration ample" },
+      { name: "Étirements & relaxation", tag: "rest", dur: 300, desc: "Étirements doux jamais forcés, respiration profonde" }
+    ])
+  },
+  haut: {
+    label: "Haut du corps",
+    phases: [
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, rotations épaules, poignets, nuque" },
+      { name: "Boxe douce — shadow léger", tag: "shadow", dur: 120, desc: "Combinaisons lentes, sans impact, épaules relâchées" },
+      { name: "Installation", tag: "rest", dur: 20, desc: "Élastiques 5 et 15 kg à portée, mur dégagé" },
+      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Sans à-coups, bras à l'horizontale maximum" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Élastique sous les pieds, flexion lente des coudes" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux vers le visage, coudes hauts" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, secoue les bras" },
+      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Sans à-coups, bras à l'horizontale maximum" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Élastique sous les pieds, flexion lente des coudes" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux vers le visage, coudes hauts" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis" }
+    ].concat(LIORA_ABDOS, [
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Étirements doux épaules, nuque, bras, respiration" }
+    ])
+  },
+  bas: {
+    label: "Bas du corps",
+    phases: [
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, cercles de hanches, chevilles, genoux" },
+      { name: "Jeu de jambes doux", tag: "shadow", dur: 120, desc: "Déplacements de boxe lents, sans sauts, équilibre" },
+      { name: "Installation", tag: "rest", dur: 20, desc: "Une chaise solide à portée de main" },
+      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appui chaise si besoin" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, main sur la chaise" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Jambe tendue vers l'arrière, sans cambrer le dos" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Montées lentes sur la pointe des pieds, appui chaise" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 1 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos au mur, flexion légère, respire normalement" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, bois une gorgée" },
+      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appui chaise si besoin" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
+      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, main sur la chaise" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Jambe tendue vers l'arrière, sans cambrer le dos" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Montées lentes sur la pointe des pieds, appui chaise" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
+      { name: "Tour 2 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos au mur, flexion légère, respire normalement" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis" }
+    ].concat(LIORA_ABDOS, [
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Étirements doux jambes et hanches, jamais forcés" }
+    ])
+  }
+};
+
+/* ============ PROFILS ============ */
+const PROFILES = {
+  allan: {
+    name: "Allan", avatar: "🥊", color: "#ea580c",
+    programs: PROGRAMS_ALLAN, progression: true, allowHard: true,
+    defaultProgram: "complet", note: null
+  },
+  liora: {
+    name: "Liora", avatar: "🧘‍♀️", color: "#7c3aed",
+    programs: PROGRAMS_LIORA, progression: false, allowHard: false,
+    defaultProgram: "complet",
+    note: "🤰 Séances adaptées à la grossesse : reste toujours en aisance respiratoire (tu dois pouvoir parler), hydrate-toi, évite la surchauffe. Stoppe en cas de douleur, contraction, vertige ou essoufflement inhabituel. Programme à faire valider par ta sage-femme ou ton médecin."
+  }
+};
+
 const TAG_COLORS = { shadow: "#7c3aed", round: "#ea580c", circuit: "#db2777", cardio: "#d97706", rest: "#6b7280" };
 const TAGS = ["shadow", "round", "circuit", "cardio", "rest"];
 const PREP_DUR = 5;
@@ -174,13 +294,20 @@ const ILLUS = {
   wallsit: { a: "breathe", s: '<path d="M92 10 V98" stroke-width="6"/><g class="m"><circle cx="76" cy="34" r="8" fill="currentColor" stroke="none"/><path d="M82 42 L84 66"/><path d="M84 66 L56 68"/><path d="M56 68 L56 96"/><path d="M82 50 L70 60"/></g><path d="M30 98 H92"/>' },
   jump: { a: "jump", s: '<g class="m"><circle cx="60" cy="26" r="8" fill="currentColor" stroke="none"/><path d="M60 34 V58"/><path d="M60 42 L44 28 M60 42 L76 28"/><path d="M60 58 L48 72 L48 88"/><path d="M60 58 L72 72 L72 88"/></g><path d="M14 98 H106"/>' },
   stretch: { a: "sway", s: '<g class="m" style="transform-origin:60px 96px;transform-box:view-box"><circle cx="52" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M60 70 Q58 48 54 38"/><path d="M58 52 Q70 40 82 36"/><path d="M56 44 L42 50"/></g><path d="M60 70 L52 96 M60 70 L68 96"/>' },
+  birddog: { a: "breathe", s: '<g class="m"><circle cx="36" cy="42" r="8" fill="currentColor" stroke="none"/><path d="M42 50 L80 54"/><path d="M50 52 L50 80"/><path d="M74 54 L74 80"/><path d="M44 48 L16 42"/><path d="M78 54 L106 50"/></g><path d="M12 86 H108"/>' },
+  sideplank: { a: "breathe", s: '<circle cx="30" cy="40" r="8" fill="currentColor" stroke="none"/><g class="m"><path d="M36 48 L84 64"/><path d="M84 64 L100 84"/><path d="M44 52 L44 80"/><path d="M60 56 L60 82"/></g><path d="M16 88 H108"/>' },
   rest: { a: "breathe", s: '<circle cx="60" cy="28" r="8" fill="currentColor" stroke="none"/><g class="m" style="transform-origin:60px 70px;transform-box:view-box"><path d="M60 36 V68"/></g><path d="M60 44 L46 58 M60 44 L74 58"/><path d="M60 68 L50 96 M60 68 L70 96"/><path d="M84 24 h10 M88 17 h10" stroke-width="3"/>' }
 };
 
 function illuKey(p) {
   const n = (p.name || "").toLowerCase();
   if (n.includes("échauffement")) return "rope";
+  if (n.includes("bird-dog")) return "birddog";
+  if (n.includes("gainage latéral")) return "sideplank";
+  if (n.includes("respiration") || n.includes("bascule")) return "rest";
+  if (n.includes("marche")) return "rope";
   if (n.includes("saut")) return "jump";
+  if (n.includes("mollet")) return "jump";
   if (n.includes("sandbag")) {
     if (n.includes("row")) return "sbrow";
     if (n.includes("soulevé")) return "hinge";
@@ -189,14 +316,16 @@ function illuKey(p) {
   if (n.includes("squat")) return "squat";
   if (n.includes("pompes")) return "pushup";
   if (n.includes("row")) return "row";
+  if (n.includes("élévation")) return "press";
   if (n.includes("press") || n.includes("développé")) return "press";
   if (n.includes("curl")) return "curl";
   if (n.includes("face-pull")) return "facepull";
   if (n.includes("swing")) return "swing";
   if (n.includes("fente")) return "lunge";
+  if (n.includes("kickback") || n.includes("extension")) return "lunge";
   if (n.includes("soulevé")) return "hinge";
   if (n.includes("chaise")) return "wallsit";
-  if (n.includes("étirement") || n.includes("récupération")) return "stretch";
+  if (n.includes("étirement") || n.includes("récupération") || n.includes("relaxation")) return "stretch";
   if (p.tag === "round" || p.tag === "shadow") return "shadow";
   if (p.tag === "rest") return "rest";
   if (p.tag === "cardio") return "rope";
@@ -210,6 +339,7 @@ function illuSvg(key) {
 }
 
 /* ============ ÉTAT ============ */
+let profileId = null;
 let currentProgram = "complet";
 let intensity = "normal";
 let durTarget = "auto";
@@ -233,10 +363,24 @@ let history = [];
 let progLevel = 0;
 let customs = {};
 
-/* ============ PERSISTANCE ============ */
-function loadPrefs() {
+/* ============ PERSISTANCE (cloisonnée par profil) ============ */
+function sk(base) { return base + "." + profileId; }
+function migrateOldStorage() {
   try {
-    const s = JSON.parse(localStorage.getItem("boxingTimerPrefs") || "{}");
+    if (localStorage.getItem("boxingTimerPrefs") && !localStorage.getItem("boxingTimerPrefs.allan")) {
+      ["boxingTimerPrefs", "boxingTimerHistory", "boxingTimerCustom"].forEach(k => {
+        const v = localStorage.getItem(k);
+        if (v !== null) { localStorage.setItem(k + ".allan", v); localStorage.removeItem(k); }
+      });
+    }
+  } catch (e) {}
+}
+function loadPrefs() {
+  intensity = "normal"; durTarget = "auto"; themePref = "auto";
+  soundOn = true; voiceOn = true; vibeOn = true;
+  currentProgram = PROFILES[profileId].defaultProgram;
+  try {
+    const s = JSON.parse(localStorage.getItem(sk("boxingTimerPrefs")) || "{}");
     if (s.program) currentProgram = s.program;
     if (s.intensity && INTENSITY[s.intensity]) intensity = s.intensity;
     if (s.durTarget) durTarget = s.durTarget;
@@ -248,28 +392,29 @@ function loadPrefs() {
 }
 function savePrefs() {
   try {
-    localStorage.setItem("boxingTimerPrefs", JSON.stringify({
+    localStorage.setItem(sk("boxingTimerPrefs"), JSON.stringify({
       program: currentProgram, intensity, durTarget, themePref, soundOn, voiceOn, vibeOn
     }));
   } catch (e) {}
 }
 function loadHistory() {
-  try { history = JSON.parse(localStorage.getItem("boxingTimerHistory") || "[]"); }
+  try { history = JSON.parse(localStorage.getItem(sk("boxingTimerHistory")) || "[]"); }
   catch (e) { history = []; }
   if (!Array.isArray(history)) history = [];
 }
 function saveHistory() {
-  try { localStorage.setItem("boxingTimerHistory", JSON.stringify(history)); } catch (e) {}
+  try { localStorage.setItem(sk("boxingTimerHistory"), JSON.stringify(history)); } catch (e) {}
 }
 function loadCustoms() {
-  try { customs = JSON.parse(localStorage.getItem("boxingTimerCustom") || "{}"); }
+  try { customs = JSON.parse(localStorage.getItem(sk("boxingTimerCustom")) || "{}"); }
   catch (e) { customs = {}; }
   if (!customs || typeof customs !== "object") customs = {};
 }
 function saveCustoms() {
-  try { localStorage.setItem("boxingTimerCustom", JSON.stringify(customs)); } catch (e) {}
+  try { localStorage.setItem(sk("boxingTimerCustom"), JSON.stringify(customs)); } catch (e) {}
 }
-function getProgram(key) { return PROGRAMS[key] || customs[key] || null; }
+function getPrograms() { return PROFILES[profileId].programs; }
+function getProgram(key) { return getPrograms()[key] || customs[key] || null; }
 
 /* ============ SEMAINES / PROGRESSION ============ */
 function weekKey(dt) {
@@ -290,6 +435,7 @@ function weekCounts() {
   return c;
 }
 function computeProgLevel() {
+  if (!PROFILES[profileId].progression) return 0;
   const c = weekCounts();
   let lvl = 0;
   const wk = weekKey(new Date());
@@ -308,7 +454,7 @@ function computeStreak() {
   return s;
 }
 
-/* ============ PHASES EFFECTIVES (durée cible × intensité + progression) ============ */
+/* ============ PHASES EFFECTIVES ============ */
 function buildPhases() {
   const prog = getProgram(currentProgram);
   const f = INTENSITY[intensity];
@@ -356,12 +502,12 @@ function beepStart() {
   vibrate([80, 60, 120]);
 }
 
-/* ============ MUSIQUE (YouTube + fichiers locaux) ============ */
+/* ============ MUSIQUE ============ */
 let ytPlayer = null;
 let audioEl = null;
 let localTracks = [];
 let localIdx = 0;
-let musicSource = null; // "yt" | "local"
+let musicSource = null;
 let musicPlaying = false;
 
 function parseYt(u) {
@@ -545,10 +691,61 @@ function totalRemainingSec() {
   return t;
 }
 
+/* ============ PROFILS — RENDU & SÉLECTION ============ */
+function renderProfileScreen() {
+  const wrap = $("profileCards");
+  wrap.innerHTML = "";
+  Object.entries(PROFILES).forEach(([id, P]) => {
+    const card = document.createElement("div");
+    card.className = "profile-card";
+    const av = document.createElement("div");
+    av.className = "pc-avatar";
+    av.style.background = P.color;
+    av.textContent = P.avatar;
+    const nm = document.createElement("div");
+    nm.className = "pc-name";
+    nm.textContent = P.name;
+    card.appendChild(av);
+    card.appendChild(nm);
+    card.addEventListener("click", () => selectProfile(id));
+    wrap.appendChild(card);
+  });
+}
+function selectProfile(id) {
+  if (!PROFILES[id]) return;
+  profileId = id;
+  const P = PROFILES[id];
+  try { localStorage.setItem("boxingTimerActiveProfile", id); } catch (e) {}
+  loadPrefs();
+  loadCustoms();
+  loadHistory();
+  if (!P.allowHard && intensity === "difficile") intensity = "normal";
+  if (!getProgram(currentProgram)) currentProgram = P.defaultProgram;
+  document.querySelectorAll("#intensitySelect button").forEach(b => {
+    if (b.dataset.int === "difficile") b.style.display = P.allowHard ? "" : "none";
+    b.classList.toggle("active", b.dataset.int === intensity);
+  });
+  document.querySelectorAll("#durSelect button").forEach(b =>
+    b.classList.toggle("active", b.dataset.dur === durTarget));
+  const pb = $("btnProfile");
+  if (pb) { pb.textContent = P.avatar; pb.title = "Profil : " + P.name + " — changer"; }
+  applyTheme();
+  renderToggles();
+  renderProgramButtons();
+  edRenderSelect();
+  edRenderPhases();
+  $("profileScreen").classList.add("hidden");
+  reset();
+}
+function showProfileScreen() {
+  if (running) startPause();
+  $("profileScreen").classList.remove("hidden");
+}
+
 /* ============ RENDU ============ */
 function renderProgramButtons() {
   elProgSel.innerHTML = "";
-  const all = Object.assign({}, PROGRAMS, customs);
+  const all = Object.assign({}, getPrograms(), customs);
   Object.entries(all).forEach(([key, prog]) => {
     const total = prog.phases.reduce((a, p) => a + p.dur, 0);
     const b = document.createElement("button");
@@ -625,6 +822,11 @@ function renderTime() {
   elTotal.textContent = fmt(totalRemainingSec());
 }
 function renderBanner() {
+  const P = PROFILES[profileId];
+  if (P.note) {
+    elBanner.textContent = P.note;
+    return;
+  }
   if (progLevel > 0) {
     elBanner.innerHTML = "📈 <strong>Progression : +" + (progLevel * 5) +
       " s par exercice</strong> — " + progLevel +
@@ -806,7 +1008,7 @@ function reset() {
   if (synth) synth.cancel();
   restoreMusic();
   releaseWake();
-  if (!getProgram(currentProgram)) currentProgram = "complet";
+  if (!getProgram(currentProgram)) currentProgram = PROFILES[profileId].defaultProgram;
   progLevel = computeProgLevel();
   phases = buildPhases();
   buildList();
@@ -849,7 +1051,7 @@ function finishSession() {
 }
 
 function selectProgram(prog) {
-  if (!getProgram(prog)) prog = "complet";
+  if (!getProgram(prog)) prog = PROFILES[profileId].defaultProgram;
   currentProgram = prog;
   document.querySelectorAll("#programSelect button").forEach(b =>
     b.classList.toggle("active", b.dataset.prog === prog));
@@ -970,7 +1172,7 @@ function edDelete() {
     edLoad(null);
     edRenderSelect();
     renderProgramButtons();
-    if (!getProgram(currentProgram)) selectProgram("complet");
+    if (!getProgram(currentProgram)) selectProgram(PROFILES[profileId].defaultProgram);
   }
 }
 
@@ -980,6 +1182,7 @@ $("btnSkip").addEventListener("click", skip);
 $("btnReset").addEventListener("click", reset);
 $("btnRestart").addEventListener("click", reset);
 $("timerCard").addEventListener("click", () => { if (started) startPause(); });
+$("btnProfile").addEventListener("click", showProfileScreen);
 document.querySelectorAll("#intensitySelect button").forEach(b =>
   b.addEventListener("click", () => selectIntensity(b.dataset.int)));
 document.querySelectorAll("#durSelect button").forEach(b =>
@@ -997,7 +1200,7 @@ $("btnTheme").addEventListener("click", () => {
   applyTheme();
 });
 $("btnClearHist").addEventListener("click", () => {
-  if (confirm("Effacer tout l'historique des séances ?")) {
+  if (confirm("Effacer tout l'historique des séances de ce profil ?")) {
     history = [];
     saveHistory();
     progLevel = computeProgLevel();
@@ -1032,17 +1235,6 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
 }
 
 /* ============ INIT ============ */
-loadPrefs();
-loadCustoms();
-loadHistory();
-if (!getProgram(currentProgram)) currentProgram = "complet";
+migrateOldStorage();
 applyTheme();
-renderProgramButtons();
-document.querySelectorAll("#intensitySelect button").forEach(b =>
-  b.classList.toggle("active", b.dataset.int === intensity));
-document.querySelectorAll("#durSelect button").forEach(b =>
-  b.classList.toggle("active", b.dataset.dur === durTarget));
-renderToggles();
-edRenderSelect();
-edRenderPhases();
-reset();
+renderProfileScreen();

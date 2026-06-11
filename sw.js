@@ -1,4 +1,4 @@
-const CACHE = "boxe-timer-v2";
+const CACHE = "boxe-timer-v3";
 const ASSETS = ["./", "./index.html", "./boxing_timer.html", "./app.js", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", e => {
