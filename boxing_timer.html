@@ -111,6 +111,22 @@
   .a-sway .m    { animation: i-sway 1.8s ease-in-out infinite; }
   .a-hinge .m   { animation: i-hinge 1.8s ease-in-out infinite; }
   .a-breathe .m { animation: i-breathe 2.4s ease-in-out infinite; }
+  /* Animation double pose : départ ↔ arrivée */
+  @keyframes i-flipA { 0%, 42% { opacity: 1; } 50%, 92% { opacity: 0; } 100% { opacity: 1; } }
+  @keyframes i-flipB { 0%, 42% { opacity: 0; } 50%, 92% { opacity: 1; } 100% { opacity: 0; } }
+  .illu .pA { animation: i-flipA 2.4s ease-in-out infinite; }
+  .illu .pB { animation: i-flipB 2.4s ease-in-out infinite; }
+  @keyframes i-arr { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.8; } }
+  .illu .arr { animation: i-arr 2.4s ease-in-out infinite; }
+  /* Encart matériel */
+  .equip-card {
+    font-size: 0.8rem; background: var(--tile); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 10px; margin-bottom: 16px; line-height: 1.9;
+  }
+  .eq-chip {
+    display: inline-block; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 999px; padding: 1px 9px; margin: 0 3px; white-space: nowrap;
+  }
   .phase-name { font-size: 1.2rem; font-weight: 700; margin: 6px 0 2px; }
   .phase-desc { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; margin-bottom: 4px; }
   .round-indicator { font-size: 0.85rem; font-weight: 600; color: var(--round); min-height: 1.2em; }
@@ -284,6 +300,7 @@
   </div>
   <div class="dur-info" id="durInfo"></div>
   <div class="prog-banner" id="progBanner"></div>
+  <div class="equip-card" id="equipCard"></div>
 
   <div id="mainView">
     <div class="timer-card" id="timerCard" title="Touche pour pause / reprise">

@@ -150,104 +150,104 @@ const PROGRAMS_ALLAN = {
    pas de sauts ni d'impacts, pas d'exercices allongée sur le dos, pas de crunchs,
    intensité modérée (toujours en aisance respiratoire), gainage doux uniquement. */
 const LIORA_ABDOS = [
-  { name: "Abdos doux — Bird-dog", tag: "circuit", dur: 40, desc: "À 4 pattes : bras et jambe opposés tendus, dos neutre, sans cambrer" },
+  { name: "Abdos doux — Bird-dog", tag: "circuit", dur: 40, desc: "À 4 pattes, dos plat : tends un bras devant et la jambe opposée derrière, tiens 3 secondes, puis change de côté" },
   { name: "Repos", tag: "rest", dur: 15, desc: "Respire tranquillement" },
-  { name: "Abdos doux — Gainage latéral genoux (gauche)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur les genoux, bassin aligné" },
+  { name: "Abdos doux — Gainage latéral genoux (gauche)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur l'avant-bras et les genoux : soulève le bassin pour aligner épaules et hanches, respire normalement" },
   { name: "Repos", tag: "rest", dur: 15, desc: "Change de côté" },
-  { name: "Abdos doux — Gainage latéral genoux (droite)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur les genoux, bassin aligné" },
+  { name: "Abdos doux — Gainage latéral genoux (droite)", tag: "circuit", dur: 30, desc: "Sur le côté, appui sur l'avant-bras et les genoux : soulève le bassin pour aligner épaules et hanches, respire normalement" },
   { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
-  { name: "Respiration & périnée", tag: "circuit", dur: 60, desc: "Bascules de bassin douces + respiration profonde, engage le périnée à l'expiration" }
+  { name: "Respiration & périnée", tag: "circuit", dur: 60, desc: "Inspire en gonflant le ventre, puis souffle longuement en serrant le périnée, comme pour retenir une envie d'uriner" }
 ];
 const PROGRAMS_LIORA = {
   complet: {
     label: "Complet",
     phases: [
-      { name: "Échauffement mobilité", tag: "cardio", dur: 300, desc: "Marche sur place, rotations épaules, cercles de bassin, chevilles" },
+      { name: "Échauffement mobilité", tag: "cardio", dur: 300, desc: "Marche sur place en balançant les bras, puis fais des cercles lents avec les épaules, le bassin et les chevilles" },
       { name: "Marche active & mobilité", tag: "cardio", dur: 180, desc: "Marche rythmée sur place, montées de genoux douces, bras actifs" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Prépare les élastiques 5 et 15 kg et une chaise solide" },
-      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appuie-toi à la chaise si besoin" },
+      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Pieds largeur d'épaules : plie les genoux comme pour t'asseoir, dos droit, puis remonte en soufflant. Tiens la chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit, épaules basses" },
+      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Élastique accroché devant toi : tire les poignées vers le ventre en serrant les omoplates, puis reviens lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Bras à l'horizontale maximum, sans à-coups" },
+      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique : monte les bras tendus sur les côtés jusqu'à l'horizontale, puis redescends lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, une main sur la chaise pour l'équilibre" },
+      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Un pied devant, un derrière, main sur la chaise : plie légèrement les deux genoux puis remonte. Change de jambe à mi-temps" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur à hauteur d'épaules : plie les coudes pour amener la poitrine vers le mur, puis pousse pour revenir" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, bois une gorgée" },
-      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appuie-toi à la chaise si besoin" },
+      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Pieds largeur d'épaules : plie les genoux comme pour t'asseoir, dos droit, puis remonte en soufflant. Tiens la chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit, épaules basses" },
+      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Élastique accroché devant toi : tire les poignées vers le ventre en serrant les omoplates, puis reviens lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Bras à l'horizontale maximum, sans à-coups" },
+      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique : monte les bras tendus sur les côtés jusqu'à l'horizontale, puis redescends lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, une main sur la chaise pour l'équilibre" },
+      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Un pied devant, un derrière, main sur la chaise : plie légèrement les deux genoux puis remonte. Change de jambe à mi-temps" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur à hauteur d'épaules : plie les coudes pour amener la poitrine vers le mur, puis pousse pour revenir" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis pour le sol" }
     ].concat(LIORA_ABDOS, [
-      { name: "Marche récupération", tag: "cardio", dur: 120, desc: "Marche tranquille, bras relâchés, respiration ample" },
-      { name: "Étirements & relaxation", tag: "rest", dur: 300, desc: "Étirements doux jamais forcés, respiration profonde" }
+      { name: "Marche récupération", tag: "cardio", dur: 120, desc: "Marche tranquillement dans la pièce, bras relâchés, le temps que le souffle redevienne normal" },
+      { name: "Étirements & relaxation", tag: "rest", dur: 300, desc: "Étire en douceur dos, jambes et épaules, 20 secondes par position. Jamais de douleur : chaque étirement doit rester agréable" }
     ])
   },
   haut: {
     label: "Haut du corps",
     phases: [
-      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, rotations épaules, poignets, nuque" },
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, puis fais des cercles lents avec les épaules, les poignets et la nuque" },
       { name: "Cardio doux — bras actifs", tag: "cardio", dur: 120, desc: "Marche sur place avec cercles et extensions de bras, épaules relâchées" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Élastiques 5 et 15 kg à portée, mur dégagé" },
-      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur à hauteur d'épaules : plie les coudes pour amener la poitrine vers le mur, puis pousse pour revenir" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit" },
+      { name: "Tour 1 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tire les poignées vers le ventre en serrant les omoplates, puis relâche lentement, buste bien droit" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Sans à-coups, bras à l'horizontale maximum" },
+      { name: "Tour 1 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique : monte les bras tendus sur les côtés jusqu'à l'horizontale, redescends sans à-coups" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Élastique sous les pieds, flexion lente des coudes" },
+      { name: "Tour 1 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique, coudes collés au corps : remonte les poignées vers les épaules, puis redescends lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux vers le visage, coudes hauts" },
+      { name: "Tour 1 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Élastique fixé en hauteur : tire les poignées vers ton visage en écartant les coudes, reviens en contrôle" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, secoue les bras" },
-      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
+      { name: "Tour 2 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur à hauteur d'épaules : plie les coudes pour amener la poitrine vers le mur, puis pousse pour revenir" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux, buste droit" },
+      { name: "Tour 2 — Row élastique 15 kg", tag: "circuit", dur: 40, desc: "Tire les poignées vers le ventre en serrant les omoplates, puis relâche lentement, buste bien droit" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Sans à-coups, bras à l'horizontale maximum" },
+      { name: "Tour 2 — Élévations latérales élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique : monte les bras tendus sur les côtés jusqu'à l'horizontale, redescends sans à-coups" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Élastique sous les pieds, flexion lente des coudes" },
+      { name: "Tour 2 — Curl élastique 5 kg", tag: "circuit", dur: 40, desc: "Debout sur l'élastique, coudes collés au corps : remonte les poignées vers les épaules, puis redescends lentement" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Tirage doux vers le visage, coudes hauts" },
+      { name: "Tour 2 — Face-pull élastique 15 kg", tag: "circuit", dur: 40, desc: "Élastique fixé en hauteur : tire les poignées vers ton visage en écartant les coudes, reviens en contrôle" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis" }
     ].concat(LIORA_ABDOS, [
-      { name: "Étirements", tag: "rest", dur: 240, desc: "Étirements doux épaules, nuque, bras, respiration" }
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Étire en douceur épaules, nuque et bras — 20 secondes par position, sans jamais forcer" }
     ])
   },
   bas: {
     label: "Bas du corps",
     phases: [
-      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, cercles de hanches, chevilles, genoux" },
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, puis fais des cercles lents avec les hanches, les genoux et les chevilles" },
       { name: "Marche active & équilibre", tag: "cardio", dur: 120, desc: "Marche rythmée, pas latéraux, transferts d'appui en douceur" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Une chaise solide à portée de main" },
-      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appui chaise si besoin" },
+      { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Pieds largeur d'épaules : plie les genoux comme pour t'asseoir, dos droit, remonte en soufflant. Appuie-toi à la chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, main sur la chaise" },
+      { name: "Tour 1 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Un pied devant, un derrière, main sur la chaise : plie légèrement les deux genoux puis remonte. Change de jambe à mi-temps" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Jambe tendue vers l'arrière, sans cambrer le dos" },
+      { name: "Tour 1 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Mains sur le dossier de la chaise : tends une jambe vers l'arrière sans cambrer le dos, reviens, puis alterne les jambes" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Montées lentes sur la pointe des pieds, appui chaise" },
+      { name: "Tour 1 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Mains sur la chaise : monte lentement sur la pointe des pieds, tiens 1 seconde en haut, redescends en douceur" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 1 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos au mur, flexion légère, respire normalement" },
+      { name: "Tour 1 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos collé au mur, glisse vers le bas comme pour t'asseoir à moitié, et tiens la position en respirant normalement" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, bois une gorgée" },
-      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appui chaise si besoin" },
+      { name: "Tour 2 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Pieds largeur d'épaules : plie les genoux comme pour t'asseoir, dos droit, remonte en soufflant. Appuie-toi à la chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
-      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Petite amplitude, main sur la chaise" },
+      { name: "Tour 2 — Fentes statiques (chaise)", tag: "circuit", dur: 40, desc: "Un pied devant, un derrière, main sur la chaise : plie légèrement les deux genoux puis remonte. Change de jambe à mi-temps" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Jambe tendue vers l'arrière, sans cambrer le dos" },
+      { name: "Tour 2 — Extensions de hanche (kickback chaise)", tag: "circuit", dur: 40, desc: "Mains sur le dossier de la chaise : tends une jambe vers l'arrière sans cambrer le dos, reviens, puis alterne les jambes" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Montées lentes sur la pointe des pieds, appui chaise" },
+      { name: "Tour 2 — Mollets debout (chaise)", tag: "circuit", dur: 40, desc: "Mains sur la chaise : monte lentement sur la pointe des pieds, tiens 1 seconde en haut, redescends en douceur" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire" },
-      { name: "Tour 2 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos au mur, flexion légère, respire normalement" },
+      { name: "Tour 2 — Chaise murale douce", tag: "circuit", dur: 30, desc: "Dos collé au mur, glisse vers le bas comme pour t'asseoir à moitié, et tiens la position en respirant normalement" },
       { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche doucement, prépare un tapis" }
     ].concat(LIORA_ABDOS, [
-      { name: "Étirements", tag: "rest", dur: 240, desc: "Étirements doux jambes et hanches, jamais forcés" }
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Étire en douceur cuisses, mollets et fessiers — 20 secondes par position, sans jamais forcer" }
     ])
   }
 };
@@ -276,55 +276,65 @@ const INTENSITY = {
   difficile: { work: 1.2, rest: 0.8, label: "Difficile" }
 };
 
-/* ============ ILLUSTRATIONS ============ */
+/* ============ ILLUSTRATIONS ============
+   Animation « double pose » : pose de départ (pA) et pose d'arrivée (pB)
+   alternent en fondu — beaucoup plus lisible qu'une simple oscillation. */
+const GROUND = '<path d="M12 102 H108" stroke-width="4" opacity="0.5"/>';
 const ILLUS = {
-  rope: { a: "bob", s: '<g class="m"><circle cx="60" cy="24" r="8" fill="currentColor" stroke="none"/><path d="M60 32 V62"/><path d="M60 40 L44 52 M60 40 L76 52"/><path d="M60 62 L50 92 M60 62 L70 92"/></g><path d="M44 52 Q60 112 76 52"/>' },
-  shadow: { a: "punch", s: '<circle cx="52" cy="26" r="8" fill="currentColor" stroke="none"/><path d="M52 34 L56 64"/><path d="M52 42 L38 52"/><circle cx="36" cy="54" r="5" fill="currentColor" stroke="none"/><g class="m"><path d="M53 44 L84 40"/><circle cx="88" cy="40" r="5" fill="currentColor" stroke="none"/></g><path d="M56 64 L42 94 M56 64 L70 94"/>' },
-  squat: { a: "bob", s: '<g class="m"><circle cx="60" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M60 38 V62"/><path d="M60 46 L78 54"/><circle cx="83" cy="58" r="6"/><path d="M60 62 L46 76 L46 96"/><path d="M60 62 L74 76 L74 96"/></g>' },
-  sbsquat: { a: "bob", s: '<g class="m"><circle cx="60" cy="22" r="8" fill="currentColor" stroke="none"/><path d="M60 30 V58"/><rect x="42" y="38" width="36" height="15" rx="7" fill="currentColor" stroke="none" opacity="0.85"/><path d="M60 58 L46 74 L46 94"/><path d="M60 58 L74 74 L74 94"/></g>' },
-  sbrow: { a: "press", s: '<path d="M60 58 L50 94 M60 58 L70 94"/><circle cx="76" cy="26" r="8" fill="currentColor" stroke="none"/><path d="M60 58 L76 34"/><g class="m"><path d="M70 44 L70 60"/><rect x="52" y="60" width="36" height="15" rx="7" fill="currentColor" stroke="none" opacity="0.85"/></g>' },
-  pushup: { a: "bob", s: '<g class="m"><circle cx="26" cy="58" r="8" fill="currentColor" stroke="none"/><path d="M34 62 L78 70 L102 78"/><path d="M44 64 L44 92"/></g><path d="M14 96 H106"/>' },
-  row: { a: "pull", s: '<path d="M102 16 V96" stroke-width="6"/><circle cx="46" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M46 38 L48 68"/><path d="M48 68 L38 96 M48 68 L60 96"/><g class="m"><path d="M47 48 L70 50"/><circle cx="74" cy="50" r="5" fill="currentColor" stroke="none"/><path d="M74 50 L102 46" stroke-dasharray="4 6" stroke-width="3"/></g>' },
-  press: { a: "press", s: '<circle cx="60" cy="34" r="8" fill="currentColor" stroke="none"/><path d="M60 42 V72"/><path d="M60 72 L48 98 M60 72 L72 98"/><g class="m"><path d="M60 50 L42 30 M60 50 L78 30"/><path d="M34 30 H50 M70 30 H86" stroke-width="6"/></g>' },
-  curl: { a: "curl", s: '<circle cx="56" cy="28" r="8" fill="currentColor" stroke="none"/><path d="M56 36 L58 68"/><path d="M58 68 L46 96 M58 68 L68 96"/><path d="M57 44 L66 58"/><g class="m" style="transform-origin:66px 58px;transform-box:view-box"><path d="M66 58 L84 54"/><path d="M84 46 V62" stroke-width="6"/></g>' },
-  facepull: { a: "pull", s: '<path d="M104 12 V96" stroke-width="6"/><circle cx="42" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M42 38 L44 70"/><path d="M44 70 L34 96 M44 70 L56 96"/><g class="m"><path d="M43 44 L66 38 M43 52 L66 46"/><circle cx="70" cy="38" r="4" fill="currentColor" stroke="none"/><circle cx="70" cy="46" r="4" fill="currentColor" stroke="none"/><path d="M70 38 L104 30 M70 46 L104 34" stroke-dasharray="4 6" stroke-width="3"/></g>' },
-  swing: { a: "swing", s: '<circle cx="58" cy="28" r="8" fill="currentColor" stroke="none"/><path d="M58 36 L58 64"/><path d="M58 64 L44 80 L44 96"/><path d="M58 64 L72 80 L72 96"/><g class="m" style="transform-origin:58px 46px;transform-box:view-box"><path d="M58 46 L58 74"/><circle cx="58" cy="82" r="8"/></g>' },
-  lunge: { a: "bob", s: '<g class="m"><circle cx="56" cy="26" r="8" fill="currentColor" stroke="none"/><path d="M56 34 L58 64"/><path d="M56 42 L44 52 M56 42 L68 52"/><path d="M58 64 L76 72 L76 94"/><path d="M58 64 L42 80 L30 92"/></g><path d="M14 96 H106"/>' },
-  hinge: { a: "hinge", s: '<path d="M60 64 L52 96 M60 64 L68 96"/><g class="m" style="transform-origin:60px 64px;transform-box:view-box"><circle cx="60" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M60 38 V64"/><path d="M60 46 L74 58"/><path d="M74 58 L74 70"/><circle cx="74" cy="76" r="6"/></g>' },
-  wallsit: { a: "breathe", s: '<path d="M92 10 V98" stroke-width="6"/><g class="m"><circle cx="76" cy="34" r="8" fill="currentColor" stroke="none"/><path d="M82 42 L84 66"/><path d="M84 66 L56 68"/><path d="M56 68 L56 96"/><path d="M82 50 L70 60"/></g><path d="M30 98 H92"/>' },
-  jump: { a: "jump", s: '<g class="m"><circle cx="60" cy="26" r="8" fill="currentColor" stroke="none"/><path d="M60 34 V58"/><path d="M60 42 L44 28 M60 42 L76 28"/><path d="M60 58 L48 72 L48 88"/><path d="M60 58 L72 72 L72 88"/></g><path d="M14 98 H106"/>' },
-  stretch: { a: "sway", s: '<g class="m" style="transform-origin:60px 96px;transform-box:view-box"><circle cx="52" cy="30" r="8" fill="currentColor" stroke="none"/><path d="M60 70 Q58 48 54 38"/><path d="M58 52 Q70 40 82 36"/><path d="M56 44 L42 50"/></g><path d="M60 70 L52 96 M60 70 L68 96"/>' },
-  birddog: { a: "breathe", s: '<g class="m"><circle cx="36" cy="42" r="8" fill="currentColor" stroke="none"/><path d="M42 50 L80 54"/><path d="M50 52 L50 80"/><path d="M74 54 L74 80"/><path d="M44 48 L16 42"/><path d="M78 54 L106 50"/></g><path d="M12 86 H108"/>' },
-  sideplank: { a: "breathe", s: '<circle cx="30" cy="40" r="8" fill="currentColor" stroke="none"/><g class="m"><path d="M36 48 L84 64"/><path d="M84 64 L100 84"/><path d="M44 52 L44 80"/><path d="M60 56 L60 82"/></g><path d="M16 88 H108"/>' },
-  rest: { a: "breathe", s: '<circle cx="60" cy="28" r="8" fill="currentColor" stroke="none"/><g class="m" style="transform-origin:60px 70px;transform-box:view-box"><path d="M60 36 V68"/></g><path d="M60 44 L46 58 M60 44 L74 58"/><path d="M60 68 L50 96 M60 68 L70 96"/><path d="M84 24 h10 M88 17 h10" stroke-width="3"/>' }
+  rope: { s: '<g class="pA"><circle cx="60" cy="24" r="9" fill="currentColor" stroke="none"/><path d="M60 33 V64"/><path d="M60 44 L44 56 M60 44 L76 56"/><path d="M60 64 L51 100 M60 64 L69 100"/><path d="M44 56 Q60 116 76 56" stroke-width="3"/></g><g class="pB"><circle cx="60" cy="18" r="9" fill="currentColor" stroke="none"/><path d="M60 27 V58"/><path d="M60 38 L44 50 M60 38 L76 50"/><path d="M60 58 L52 84 L54 94 M60 58 L68 84 L66 94"/><path d="M44 50 Q60 -12 76 50" stroke-width="3"/></g>' + GROUND },
+  walk: { s: '<g class="pA"><circle cx="60" cy="22" r="9" fill="currentColor" stroke="none"/><path d="M60 31 V60"/><path d="M60 40 L78 52 M60 40 L44 50"/><path d="M60 60 L76 78 L78 100 M60 60 L46 80 L38 98"/></g><g class="pB"><circle cx="60" cy="22" r="9" fill="currentColor" stroke="none"/><path d="M60 31 V60"/><path d="M60 40 L42 52 M60 40 L76 50"/><path d="M60 60 L44 78 L42 100 M60 60 L74 80 L82 98"/></g>' + GROUND },
+  shadow: { s: '<circle cx="52" cy="26" r="9" fill="currentColor" stroke="none"/><path d="M52 35 L56 66"/><path d="M56 66 L42 100 M56 66 L70 100"/><path d="M53 44 L42 38"/><circle cx="40" cy="37" r="5" fill="currentColor" stroke="none"/><g class="pA"><path d="M54 45 L66 38"/><circle cx="69" cy="37" r="5" fill="currentColor" stroke="none"/></g><g class="pB"><path d="M54 45 L92 40"/><circle cx="96" cy="40" r="5" fill="currentColor" stroke="none"/></g>' + GROUND },
+  squat: { s: '<g class="pA"><circle cx="58" cy="20" r="9" fill="currentColor" stroke="none"/><path d="M58 29 V58"/><path d="M58 40 H80"/><path d="M58 58 L52 100 M58 58 L66 100"/></g><g class="pB"><circle cx="58" cy="42" r="9" fill="currentColor" stroke="none"/><path d="M58 51 L56 72"/><path d="M57 56 H80"/><path d="M56 72 L42 76 L46 100 M56 72 L70 78 L66 100"/></g><g class="arr" stroke-width="4"><path d="M98 44 V82"/><path d="M93 51 L98 44 L103 51 M93 75 L98 82 L103 75"/></g>' + GROUND },
+  goblet: { s: '<g class="pA"><circle cx="58" cy="20" r="9" fill="currentColor" stroke="none"/><path d="M58 29 V58"/><path d="M58 40 H76"/><circle cx="82" cy="42" r="6"/><path d="M58 58 L52 100 M58 58 L66 100"/></g><g class="pB"><circle cx="58" cy="42" r="9" fill="currentColor" stroke="none"/><path d="M58 51 L56 72"/><path d="M57 56 H76"/><circle cx="82" cy="58" r="6"/><path d="M56 72 L42 76 L46 100 M56 72 L70 78 L66 100"/></g>' + GROUND },
+  sbsquat: { s: '<g class="pA"><circle cx="60" cy="16" r="9" fill="currentColor" stroke="none"/><path d="M60 25 V54"/><rect x="44" y="32" width="32" height="14" rx="7" fill="currentColor" stroke="none"/><path d="M60 54 L53 100 M60 54 L67 100"/></g><g class="pB"><circle cx="60" cy="36" r="9" fill="currentColor" stroke="none"/><path d="M60 45 L58 68"/><rect x="42" y="50" width="32" height="14" rx="7" fill="currentColor" stroke="none"/><path d="M58 68 L44 74 L48 100 M58 68 L72 76 L68 100"/></g>' + GROUND },
+  sbrow: { s: '<path d="M56 64 L50 100 M56 64 L64 100"/><path d="M56 64 L78 42"/><circle cx="82" cy="36" r="9" fill="currentColor" stroke="none"/><g class="pA"><path d="M68 52 L64 78"/><rect x="48" y="78" width="32" height="13" rx="6" fill="currentColor" stroke="none"/></g><g class="pB"><path d="M68 52 L62 62"/><rect x="46" y="60" width="32" height="13" rx="6" fill="currentColor" stroke="none"/></g>' + GROUND },
+  pushup: { s: '<g class="pA"><circle cx="24" cy="50" r="9" fill="currentColor" stroke="none"/><path d="M32 55 L96 72"/><path d="M42 58 V96"/><path d="M70 64 L98 88"/></g><g class="pB"><circle cx="24" cy="68" r="9" fill="currentColor" stroke="none"/><path d="M32 72 L96 80"/><path d="M42 74 L30 84 L40 96"/><path d="M70 76 L98 90"/></g>' + GROUND },
+  wallpush: { s: '<path d="M100 8 V102" stroke-width="7"/><g class="pA"><circle cx="44" cy="28" r="9" fill="currentColor" stroke="none"/><path d="M44 37 L50 74"/><path d="M47 46 L96 38"/><path d="M50 74 L40 100 M50 74 L54 100"/></g><g class="pB"><circle cx="58" cy="30" r="9" fill="currentColor" stroke="none"/><path d="M58 39 L62 76"/><path d="M60 48 L80 42 L96 38"/><path d="M62 76 L50 100 M62 76 L66 100"/></g>' + GROUND },
+  row: { s: '<path d="M104 12 V100" stroke-width="7"/><circle cx="42" cy="26" r="9" fill="currentColor" stroke="none"/><path d="M42 35 L44 68"/><path d="M44 68 L34 100 M44 68 L54 100"/><g class="pA"><path d="M43 46 L74 44"/><circle cx="78" cy="44" r="5" fill="currentColor" stroke="none"/><path d="M78 44 L104 38" stroke-dasharray="3 6" stroke-width="3"/></g><g class="pB"><path d="M43 46 L58 50"/><circle cx="58" cy="50" r="5" fill="currentColor" stroke="none"/><path d="M58 50 L104 38" stroke-dasharray="3 6" stroke-width="3"/></g>' + GROUND },
+  press: { s: '<circle cx="60" cy="30" r="9" fill="currentColor" stroke="none"/><path d="M60 39 V70"/><path d="M60 70 L50 100 M60 70 L70 100"/><g class="pA"><path d="M60 46 L46 38 M60 46 L74 38"/><path d="M40 34 H52 M68 34 H80" stroke-width="7"/></g><g class="pB"><path d="M60 46 L48 18 M60 46 L72 18"/><path d="M42 16 H54 M66 16 H78" stroke-width="7"/></g>' + GROUND },
+  lateral: { s: '<circle cx="60" cy="30" r="9" fill="currentColor" stroke="none"/><path d="M60 39 V70"/><path d="M60 70 L50 100 M60 70 L70 100"/><g class="pA"><path d="M60 46 L52 66 M60 46 L68 66"/><path d="M48 68 H56 M64 68 H72" stroke-width="6"/></g><g class="pB"><path d="M60 46 H32 M60 46 H88"/><path d="M28 42 V50 M92 42 V50" stroke-width="6"/></g>' + GROUND },
+  curl: { s: '<circle cx="60" cy="28" r="9" fill="currentColor" stroke="none"/><path d="M60 37 L60 68"/><path d="M60 68 L50 100 M60 68 L70 100"/><g class="pA"><path d="M60 46 L64 70"/><path d="M58 72 H70" stroke-width="7"/></g><g class="pB"><path d="M60 46 L66 58 L58 42"/><path d="M52 40 H64" stroke-width="7"/></g>' + GROUND },
+  facepull: { s: '<path d="M104 10 V100" stroke-width="7"/><circle cx="42" cy="28" r="9" fill="currentColor" stroke="none"/><path d="M42 37 L44 70"/><path d="M44 70 L34 100 M44 70 L54 100"/><g class="pA"><path d="M43 42 L74 32"/><circle cx="77" cy="31" r="5" fill="currentColor" stroke="none"/><path d="M77 31 L104 26" stroke-dasharray="3 6" stroke-width="3"/></g><g class="pB"><path d="M43 42 L62 36 L54 28"/><circle cx="53" cy="27" r="5" fill="currentColor" stroke="none"/><path d="M53 27 L104 26" stroke-dasharray="3 6" stroke-width="3"/></g>' + GROUND },
+  swing: { s: '<g class="pA"><circle cx="80" cy="34" r="9" fill="currentColor" stroke="none"/><path d="M58 62 L76 42"/><path d="M58 62 L48 100 M58 62 L68 100"/><path d="M68 50 L56 76"/><circle cx="54" cy="83" r="7"/></g><g class="pB"><circle cx="58" cy="22" r="9" fill="currentColor" stroke="none"/><path d="M58 31 V62"/><path d="M58 62 L48 100 M58 62 L68 100"/><path d="M58 44 L84 46"/><circle cx="91" cy="47" r="7"/></g>' + GROUND },
+  lunge: { s: '<g class="pA"><circle cx="58" cy="22" r="9" fill="currentColor" stroke="none"/><path d="M58 31 V60"/><path d="M58 42 L48 52 M58 42 L68 52"/><path d="M58 60 L52 100 M58 60 L66 100"/></g><g class="pB"><circle cx="58" cy="30" r="9" fill="currentColor" stroke="none"/><path d="M58 39 V66"/><path d="M58 48 L48 58 M58 48 L68 58"/><path d="M58 66 L78 74 L78 100 M58 66 L42 84 L30 96"/></g>' + GROUND },
+  hinge: { s: '<g class="pA"><circle cx="60" cy="22" r="9" fill="currentColor" stroke="none"/><path d="M60 31 V60"/><path d="M60 60 L52 100 M60 60 L68 100"/><path d="M60 46 L64 68"/><circle cx="64" cy="76" r="7"/></g><g class="pB"><circle cx="84" cy="40" r="9" fill="currentColor" stroke="none"/><path d="M60 62 L80 44"/><path d="M60 62 L52 100 M60 62 L68 100"/><path d="M70 52 L66 76"/><circle cx="66" cy="84" r="7"/></g>' + GROUND },
+  wallsit: { a: "breathe", s: '<path d="M94 8 V102" stroke-width="7"/><g class="m"><circle cx="74" cy="30" r="9" fill="currentColor" stroke="none"/><path d="M80 38 L82 64"/><path d="M82 64 L54 66"/><path d="M54 66 V100"/><path d="M80 46 L66 56"/></g><path d="M20 102 H94" stroke-width="4" opacity="0.5"/>' },
+  jump: { s: '<g class="pA"><circle cx="58" cy="44" r="9" fill="currentColor" stroke="none"/><path d="M58 53 L56 72"/><path d="M57 58 L40 66 M57 58 L74 66"/><path d="M56 72 L44 78 L48 100 M56 72 L70 80 L66 100"/></g><g class="pB"><circle cx="58" cy="12" r="9" fill="currentColor" stroke="none"/><path d="M58 21 V48"/><path d="M58 30 L42 16 M58 30 L74 16"/><path d="M58 48 L48 64 L50 78 M58 48 L68 64 L66 78"/></g>' + GROUND },
+  stretch: { s: '<g class="pA"><circle cx="48" cy="26" r="9" fill="currentColor" stroke="none"/><path d="M60 68 Q56 44 50 34"/><path d="M52 46 Q66 32 80 28"/></g><g class="pB"><circle cx="72" cy="26" r="9" fill="currentColor" stroke="none"/><path d="M60 68 Q64 44 70 34"/><path d="M68 46 Q54 32 40 28"/></g><path d="M60 68 L52 100 M60 68 L68 100"/>' + GROUND },
+  rest: { a: "breathe", s: '<circle cx="60" cy="26" r="9" fill="currentColor" stroke="none"/><g class="m" style="transform-origin:60px 70px;transform-box:view-box"><path d="M60 35 V66"/></g><path d="M60 44 L46 58 M60 44 L74 58"/><path d="M60 66 L50 100 M60 66 L70 100"/><path d="M86 22 h10 M90 14 h10" stroke-width="3"/>' + GROUND },
+  birddog: { s: '<g class="pA"><circle cx="34" cy="44" r="9" fill="currentColor" stroke="none"/><path d="M40 52 L82 54"/><path d="M48 54 V88 M76 56 V88"/></g><g class="pB"><circle cx="34" cy="42" r="9" fill="currentColor" stroke="none"/><path d="M40 50 L82 52"/><path d="M52 52 V88 M72 54 V88"/><path d="M42 48 L12 40"/><path d="M80 52 L110 46"/></g><path d="M14 92 H106" stroke-width="4" opacity="0.5"/>' },
+  sideplank: { s: '<g class="pA"><circle cx="28" cy="48" r="9" fill="currentColor" stroke="none"/><path d="M34 54 L78 70 L98 86"/><path d="M40 56 V86"/></g><g class="pB"><circle cx="28" cy="38" r="9" fill="currentColor" stroke="none"/><path d="M34 44 L78 60 L98 84"/><path d="M40 46 V84"/><path d="M52 48 V24"/></g><path d="M14 92 H106" stroke-width="4" opacity="0.5"/>' },
+  kickback: { s: '<path d="M24 56 V100 M24 56 H40" stroke-width="6"/><circle cx="56" cy="24" r="9" fill="currentColor" stroke="none"/><path d="M56 33 V64"/><path d="M56 42 L26 52"/><g class="pA"><path d="M56 64 L50 100 M56 64 L62 100"/></g><g class="pB"><path d="M56 64 L50 100"/><path d="M56 64 L88 78"/></g>' + GROUND },
+  calf: { s: '<path d="M24 56 V100 M24 56 H40" stroke-width="6"/><g class="pA"><circle cx="56" cy="24" r="9" fill="currentColor" stroke="none"/><path d="M56 33 V64"/><path d="M56 42 L26 52"/><path d="M56 64 L50 100 M56 64 L62 100"/></g><g class="pB"><circle cx="56" cy="16" r="9" fill="currentColor" stroke="none"/><path d="M56 25 V56"/><path d="M56 36 L26 50"/><path d="M56 56 L50 90 L54 100 M56 56 L62 90 L66 100"/></g>' + GROUND }
 };
 
 function illuKey(p) {
   const n = (p.name || "").toLowerCase();
   if (n.includes("échauffement")) return "rope";
+  if (n.includes("marche")) return "walk";
   if (n.includes("bird-dog")) return "birddog";
   if (n.includes("gainage latéral")) return "sideplank";
   if (n.includes("respiration") || n.includes("bascule")) return "rest";
-  if (n.includes("marche")) return "rope";
   if (n.includes("saut")) return "jump";
-  if (n.includes("mollet")) return "jump";
+  if (n.includes("mollet")) return "calf";
+  if (n.includes("kickback") || n.includes("extension")) return "kickback";
+  if (n.includes("élévation")) return "lateral";
   if (n.includes("sandbag")) {
     if (n.includes("row")) return "sbrow";
     if (n.includes("soulevé")) return "hinge";
     return "sbsquat";
   }
+  if (n.includes("goblet")) return "goblet";
   if (n.includes("squat")) return "squat";
-  if (n.includes("pompes")) return "pushup";
+  if (n.includes("pompes")) return n.includes("mur") ? "wallpush" : "pushup";
   if (n.includes("row")) return "row";
-  if (n.includes("élévation")) return "press";
   if (n.includes("press") || n.includes("développé")) return "press";
   if (n.includes("curl")) return "curl";
   if (n.includes("face-pull")) return "facepull";
   if (n.includes("swing")) return "swing";
   if (n.includes("fente")) return "lunge";
-  if (n.includes("kickback") || n.includes("extension")) return "lunge";
   if (n.includes("soulevé")) return "hinge";
-  if (n.includes("chaise")) return "wallsit";
+  if (n.includes("chaise murale")) return "wallsit";
   if (n.includes("étirement") || n.includes("récupération") || n.includes("relaxation")) return "stretch";
   if (p.tag === "round" || p.tag === "shadow") return "shadow";
   if (p.tag === "rest") return "rest";
@@ -333,8 +343,8 @@ function illuKey(p) {
 }
 function illuSvg(key) {
   const il = ILLUS[key] || ILLUS.shadow;
-  return '<svg viewBox="0 0 120 120" class="a-' + il.a + '" xmlns="http://www.w3.org/2000/svg">' +
-    '<g stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
+  return '<svg viewBox="0 0 120 120"' + (il.a ? ' class="a-' + il.a + '"' : "") + ' xmlns="http://www.w3.org/2000/svg">' +
+    '<g stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
     il.s + "</g></svg>";
 }
 
@@ -843,6 +853,25 @@ function renderDurInfo() {
     prog.label + ", " + INTENSITY[intensity].label +
     (durTarget !== "auto" ? ", cible " + durTarget + " min" : "") + ")";
 }
+function renderEquip() {
+  const prog = getProgram(currentProgram);
+  const txt = prog.phases.map(p => (p.name + " " + (p.desc || ""))).join(" ").toLowerCase();
+  const items = [];
+  if (/kettlebell|kb /.test(txt)) items.push("🏋️ Kettlebell 10 kg");
+  if (/sandbag/.test(txt)) items.push("🎒 Sandbag 30 kg");
+  if (/haltères/.test(txt)) items.push("🏋️ Haltères 10 kg");
+  if (/élastique 40/.test(txt)) items.push("🟠 Élastique 40 kg");
+  if (/élastique 15/.test(txt)) items.push("🟡 Élastique 15 kg");
+  if (/élastique 5\b|élastiques 5/.test(txt)) items.push("🟢 Élastique 5 kg");
+  if (/chaise(?! murale)/.test(txt) || /dossier/.test(txt)) items.push("🪑 Chaise solide");
+  if (/mur(?!ale)| mur |au mur|le mur/.test(txt)) items.push("🧱 Un pan de mur dégagé");
+  if (/4 pattes|gainage|allongé|tapis|étirement|sol/.test(txt)) items.push("🧘 Tapis de sol");
+  items.push("💧 Bouteille d'eau");
+  const el = $("equipCard");
+  if (!el) return;
+  el.innerHTML = "<strong>🎒 Matériel à préparer :</strong> " +
+    items.map(i => '<span class="eq-chip">' + i + "</span>").join("");
+}
 function renderStats() {
   $("statSessions").textContent = history.length;
   $("statTime").textContent = fmtLong(history.reduce((a, h) => a + (h.t || 0), 0));
@@ -1024,6 +1053,7 @@ function reset() {
   elMainView.classList.remove("hidden");
   renderBanner();
   renderDurInfo();
+  renderEquip();
   renderStats();
   renderPhase();
 }
