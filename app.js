@@ -163,7 +163,7 @@ const PROGRAMS_LIORA = {
     label: "Complet",
     phases: [
       { name: "Échauffement mobilité", tag: "cardio", dur: 300, desc: "Marche sur place, rotations épaules, cercles de bassin, chevilles" },
-      { name: "Boxe douce — shadow léger", tag: "shadow", dur: 180, desc: "Jab-cross lents et ludiques, sans impact, déplacements souples" },
+      { name: "Marche active & mobilité", tag: "cardio", dur: 180, desc: "Marche rythmée sur place, montées de genoux douces, bras actifs" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Prépare les élastiques 5 et 15 kg et une chaise solide" },
       { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appuie-toi à la chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
@@ -194,7 +194,7 @@ const PROGRAMS_LIORA = {
     label: "Haut du corps",
     phases: [
       { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, rotations épaules, poignets, nuque" },
-      { name: "Boxe douce — shadow léger", tag: "shadow", dur: 120, desc: "Combinaisons lentes, sans impact, épaules relâchées" },
+      { name: "Cardio doux — bras actifs", tag: "cardio", dur: 120, desc: "Marche sur place avec cercles et extensions de bras, épaules relâchées" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Élastiques 5 et 15 kg à portée, mur dégagé" },
       { name: "Tour 1 — Pompes au mur", tag: "circuit", dur: 40, desc: "Mains sur le mur, corps gainé, rythme lent" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
@@ -224,7 +224,7 @@ const PROGRAMS_LIORA = {
     label: "Bas du corps",
     phases: [
       { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche sur place, cercles de hanches, chevilles, genoux" },
-      { name: "Jeu de jambes doux", tag: "shadow", dur: 120, desc: "Déplacements de boxe lents, sans sauts, équilibre" },
+      { name: "Marche active & équilibre", tag: "cardio", dur: 120, desc: "Marche rythmée, pas latéraux, transferts d'appui en douceur" },
       { name: "Installation", tag: "rest", dur: 20, desc: "Une chaise solide à portée de main" },
       { name: "Tour 1 — Squat poids du corps", tag: "circuit", dur: 40, desc: "Amplitude confortable, appui chaise si besoin" },
       { name: "Repos", tag: "rest", dur: 20, desc: "Respire tranquillement" },
