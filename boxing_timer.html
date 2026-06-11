@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer Boxe Maison</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+  :root {
+    --shadow: #7c3aed;
+    --round: #ea580c;
+    --circuit: #db2777;
+    --cardio: #d97706;
+    --rest: #6b7280;
+    --bg: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --highlight: #dbeafe;
+    --tile: #f9fafb;
+    --tile2: #f3f4f6;
+  }
+  body[data-theme="dark"] {
+    --bg: #0f172a;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+    --highlight: #1e3a5f;
+    --tile: #1e293b;
+    --tile2: #1e293b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background .2s, color .2s;
+  }
+  .app { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
+  h1 { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 14px; letter-spacing: -0.01em; }
+  /* Sélecteur de programme */
+  .program-select { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .program-select button {
+    flex: 1 1 30%; padding: 10px 4px;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--bg); font-size: 0.82rem; font-weight: 600;
+    color: var(--muted); cursor: pointer; transition: all .15s; line-height: 1.25;
+  }
+  .program-select button .p-min { display: block; font-size: 0.7rem; font-weight: 500; opacity: .8; }
+  .program-select button.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+  /* Toggles, intensité, durée */
+  .toggles, .intensity { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .toggles button, .intensity button {
+    flex: 1 1 45%; padding: 8px 0;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--bg); font-size: 0.8rem; font-weight: 600;
+    color: var(--muted); cursor: pointer;
+  }
+  .intensity button { flex: 1 1 auto; }
+  .toggles button.on { color: var(--text); border-color: var(--text); }
+  .intensity button.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .dur-info { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; text-align: center; }
+  .prog-banner {
+    font-size: 0.78rem; color: var(--muted);
+    background: var(--tile); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 10px; margin-bottom: 16px;
+  }
+  /* Zone timer */
+  .timer-card {
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px 20px 16px; text-align: center; margin-bottom: 16px;
+    cursor: pointer; user-select: none;
+  }
+  .phase-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #fff;
+  }
+  .badge.shadow  { background: var(--shadow); }
+  .badge.round   { background: var(--round); }
+  .badge.circuit { background: var(--circuit); }
+  .badge.cardio  { background: var(--cardio); }
+  .badge.rest    { background: var(--rest); }
+  /* Illustration */
+  .illu { height: 104px; display: flex; justify-content: center; margin-bottom: 2px; }
+  .illu svg { height: 100%; }
+  .illu svg .m { transform-box: fill-box; transform-origin: center; }
+  @keyframes i-bob     { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+  @keyframes i-jump    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+  @keyframes i-punch   { 0%,100%{transform:translateX(-14px)} 50%{transform:translateX(0)} }
+  @keyframes i-pull    { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-12px)} }
+  @keyframes i-press   { 0%,100%{transform:translateY(12px)} 50%{transform:translateY(0)} }
+  @keyframes i-curl    { 0%,100%{transform:rotate(0)} 50%{transform:rotate(-50deg)} }
+  @keyframes i-swing   { 0%,100%{transform:rotate(25deg)} 50%{transform:rotate(-60deg)} }
+  @keyframes i-sway    { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+  @keyframes i-hinge   { 0%,100%{transform:rotate(0)} 50%{transform:rotate(40deg)} }
+  @keyframes i-breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+  .a-bob .m     { animation: i-bob 1.6s ease-in-out infinite; }
+  .a-jump .m    { animation: i-jump 1s ease-in-out infinite; }
+  .a-punch .m   { animation: i-punch 0.9s ease-in-out infinite; }
+  .a-pull .m    { animation: i-pull 1.4s ease-in-out infinite; }
+  .a-press .m   { animation: i-press 1.4s ease-in-out infinite; }
+  .a-curl .m    { animation: i-curl 1.4s ease-in-out infinite; }
+  .a-swing .m   { animation: i-swing 1.3s ease-in-out infinite; }
+  .a-sway .m    { animation: i-sway 1.8s ease-in-out infinite; }
+  .a-hinge .m   { animation: i-hinge 1.8s ease-in-out infinite; }
+  .a-breathe .m { animation: i-breathe 2.4s ease-in-out infinite; }
+  .phase-name { font-size: 1.2rem; font-weight: 700; margin: 6px 0 2px; }
+  .phase-desc { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; margin-bottom: 4px; }
+  .round-indicator { font-size: 0.85rem; font-weight: 600; color: var(--round); min-height: 1.2em; }
+  .time-display {
+    font-size: 4.2rem; font-weight: 800; font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em; line-height: 1.1; margin: 4px 0 14px;
+  }
+  .time-display.warning { color: #dc2626; }
+  .progress-track { height: 10px; background: var(--tile2); border-radius: 999px; overflow: hidden; margin-bottom: 12px; }
+  .progress-fill { height: 100%; width: 100%; border-radius: 999px; background: var(--shadow); transition: width .25s linear; }
+  .total-remaining { font-size: 0.85rem; color: var(--muted); }
+  .total-remaining strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  .tap-hint { font-size: 0.7rem; color: var(--muted); opacity: .7; margin-top: 6px; }
+  /* Contrôles */
+  .controls { display: flex; gap: 8px; margin-bottom: 24px; }
+  .controls button {
+    flex: 1; padding: 14px 0; border: none; border-radius: 12px;
+    font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity .15s;
+  }
+  .controls button:active { opacity: 0.8; }
+  #btnMain { background: var(--text); color: var(--bg); flex: 2; }
+  #btnMain.running { background: #d97706; color: #fff; }
+  #btnSkip, #btnReset { background: var(--tile2); color: var(--text); }
+  /* Liste des phases */
+  .phase-list-title {
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px;
+  }
+  .phase-list { border: 1px solid var(--border); border-radius: 12px; max-height: 300px; overflow-y: auto; }
+  .phase-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    border-bottom: 1px solid var(--border); font-size: 0.9rem; transition: background .2s;
+  }
+  .phase-item:last-child { border-bottom: none; }
+  .phase-item .p-num { font-size: 0.75rem; color: var(--muted); width: 24px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .phase-item .p-name { flex: 1; font-weight: 500; }
+  .phase-item .p-dur { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .phase-item.current { background: var(--highlight); }
+  .phase-item.current .p-name { font-weight: 700; }
+  .phase-item.done { opacity: 0.4; }
+  /* Sections détails (musique, éditeur, stats) */
+  details.stats { margin-top: 20px; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+  details.stats summary { cursor: pointer; font-weight: 700; font-size: 0.9rem; }
+  details.stats input[type="text"], details.stats input[type="number"], details.stats select, details.stats textarea {
+    background: var(--bg); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px; font-size: 0.85rem; font-family: inherit;
+  }
+  .m-row { display: flex; gap: 8px; margin-top: 10px; align-items: center; flex-wrap: wrap; }
+  .m-row input[type="text"] { flex: 1; min-width: 120px; }
+  .m-row button, .ed-actions button {
+    border: 1px solid var(--border); border-radius: 8px; background: var(--bg);
+    color: var(--text); padding: 8px 12px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  }
+  .m-note { font-size: 0.75rem; color: var(--muted); margin-top: 8px; }
+  #ytWrap { margin-top: 10px; }
+  #ytWrap iframe { width: 100%; border-radius: 8px; border: none; }
+  /* Éditeur */
+  .ed-phase { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+  .ed-phase input[type="text"] { flex: 1; min-width: 80px; }
+  .ed-phase input[type="number"] { width: 64px; }
+  .ed-phase select { width: 86px; }
+  .ed-phase button {
+    border: none; background: var(--tile2); color: var(--text);
+    border-radius: 6px; width: 28px; height: 28px; cursor: pointer; flex-shrink: 0;
+  }
+  .ed-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  #edName { width: 100%; margin-top: 10px; }
+  #edPhases { margin-top: 10px; }
+  #btnEdDelete { color: #ef4444; }
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+  .stat-tile { background: var(--tile); border-radius: 10px; padding: 10px 6px; text-align: center; }
+  .stat-tile .v { font-size: 1.1rem; font-weight: 800; }
+  .stat-tile .l { font-size: 0.68rem; color: var(--muted); }
+  .stats-split { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; }
+  .hist-list .h-row {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .hist-list .h-row:last-child { border-bottom: none; }
+  .hist-list .h-date { color: var(--muted); }
+  .hist-list .h-note { width: 100%; font-size: 0.78rem; font-style: italic; color: var(--muted); }
+  #btnClearHist {
+    margin-top: 10px; background: rgba(220,38,38,.12); color: #ef4444; border: none;
+    border-radius: 8px; padding: 8px 12px; font-weight: 600; cursor: pointer; font-size: 0.8rem;
+  }
+  /* Écran de fin */
+  .finish-screen { display: none; text-align: center; padding: 40px 20px; }
+  .finish-screen.visible { display: block; }
+  .finish-screen .emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .finish-screen h2 { font-size: 1.5rem; margin-bottom: 8px; }
+  .finish-screen p { color: var(--muted); margin-bottom: 16px; }
+  .finish-screen textarea {
+    width: 100%; min-height: 70px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px;
+    font-family: inherit; font-size: 0.9rem; margin-bottom: 10px;
+  }
+  .finish-screen .f-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .finish-screen button {
+    padding: 12px 24px; border: none; border-radius: 12px;
+    background: var(--text); color: var(--bg); font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  }
+  .finish-screen #btnSaveNote { background: var(--tile2); color: var(--text); }
+  .hidden { display: none; }
+  @media (max-width: 420px) {
+    .time-display { font-size: 3.4rem; }
+    .program-select button { flex: 1 1 45%; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>🥊 Timer Boxe Maison</h1>
+
+  <div class="program-select" id="programSelect"></div>
+
+  <div class="toggles">
+    <button id="btnSound" class="on">🔊 Sons : activés</button>
+    <button id="btnVoice" class="on">🗣 Voix : activée</button>
+    <button id="btnVibe" class="on">📳 Vibreur : activé</button>
+    <button id="btnTheme">🌓 Thème : auto</button>
+  </div>
+
+  <div class="intensity" id="intensitySelect">
+    <button data-int="facile">Facile</button>
+    <button data-int="normal" class="active">Normal</button>
+    <button data-int="difficile">Difficile</button>
+  </div>
+
+  <div class="intensity" id="durSelect">
+    <button data-dur="auto" class="active">Durée auto</button>
+    <button data-dur="15">15′</button>
+    <button data-dur="25">25′</button>
+    <button data-dur="35">35′</button>
+    <button data-dur="45">45′</button>
+  </div>
+  <div class="dur-info" id="durInfo"></div>
+  <div class="prog-banner" id="progBanner"></div>
+
+  <div id="mainView">
+    <div class="timer-card" id="timerCard" title="Touche pour pause / reprise">
+      <div class="phase-meta">
+        <span id="phaseCounter">Phase 1 / 1</span>
+        <span class="badge" id="phaseBadge">cardio</span>
+      </div>
+      <div class="illu" id="illu"></div>
+      <div class="phase-name" id="phaseName">—</div>
+      <div class="phase-desc" id="phaseDesc"></div>
+      <div class="round-indicator" id="roundIndicator"></div>
+      <div class="time-display" id="timeDisplay">00:00</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="total-remaining">Temps total restant : <strong id="totalRemaining">00:00</strong></div>
+      <div class="tap-hint">Touche le cadran pour mettre en pause / reprendre</div>
+    </div>
+
+    <div class="controls">
+      <button id="btnMain">Démarrer</button>
+      <button id="btnSkip">Passer ⏭</button>
+      <button id="btnReset">↺</button>
+    </div>
+
+    <div class="phase-list-title">Déroulé de la séance</div>
+    <div class="phase-list" id="phaseList"></div>
+
+    <details class="stats" id="musicDetails">
+      <summary>🎵 Musique</summary>
+      <div class="m-row">
+        <input type="text" id="ytUrl" placeholder="URL YouTube (vidéo ou playlist)">
+        <button id="btnYtLoad">Charger</button>
+      </div>
+      <div id="ytWrap"></div>
+      <div class="m-row">
+        <label for="musicFiles" style="font-size:.82rem">Ou fichiers locaux :</label>
+        <input type="file" id="musicFiles" accept="audio/*" multiple>
+      </div>
+      <div class="m-row">
+        <button id="btnMusic">▶ Lecture musique</button>
+        <span id="musicNow" style="font-size:.78rem;color:var(--muted)"></span>
+      </div>
+      <div class="m-note">Le volume baisse automatiquement pendant les annonces vocales. L'appli YouTube Music ne peut pas être pilotée directement (limite imposée par Google) — colle ici une playlist YouTube classique, ou lance simplement ta musique en arrière-plan : les bips se superposent sans la couper.</div>
+    </details>
+
+    <details class="stats" id="editorDetails">
+      <summary>✏️ Mes séances personnalisées</summary>
+      <div class="m-row">
+        <select id="edSelect"><option value="">— Nouvelle séance —</option></select>
+        <button id="btnEdDup">Dupliquer la séance affichée</button>
+      </div>
+      <input type="text" id="edName" placeholder="Nom de la séance">
+      <div id="edPhases"></div>
+      <div class="ed-actions">
+        <button id="btnEdAddPhase">+ Phase</button>
+        <button id="btnEdSave">💾 Enregistrer</button>
+        <button id="btnEdDelete" class="hidden">🗑 Supprimer</button>
+      </div>
+      <div class="m-note">Tags : shadow (boxe technique), round (round chrono), circuit (renfo), cardio, rest (repos). Durées en secondes.</div>
+    </details>
+
+    <details class="stats" id="statsDetails">
+      <summary>📊 Historique &amp; statistiques</summary>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-tile"><div class="v" id="statSessions">0</div><div class="l">Séances</div></div>
+        <div class="stat-tile"><div class="v" id="statTime">0 min</div><div class="l">Temps cumulé</div></div>
+        <div class="stat-tile"><div class="v" id="statWeek">0</div><div class="l">Cette semaine</div></div>
+        <div class="stat-tile"><div class="v" id="statStreak">0</div><div class="l">Série (semaines)</div></div>
+        <div class="stat-tile"><div class="v" id="statRounds">0</div><div class="l">Rounds de boxe</div></div>
+        <div class="stat-tile"><div class="v" id="statLevel">+0 s</div><div class="l">Progression</div></div>
+      </div>
+      <div class="stats-split" id="statsSplit"></div>
+      <div class="hist-list" id="histList"></div>
+      <button id="btnClearHist">Effacer l'historique</button>
+    </details>
+  </div>
+
+  <div class="finish-screen" id="finishScreen">
+    <div class="emoji">🏆</div>
+    <h2>Séance terminée !</h2>
+    <p id="finishMsg">Bien joué. Hydrate-toi et récupère.</p>
+    <textarea id="noteInput" placeholder="Note de séance : ressenti, charges, douleurs… (optionnel)"></textarea>
+    <div class="f-actions">
+      <button id="btnSaveNote">Enregistrer la note</button>
+      <button id="btnRestart">Recommencer</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

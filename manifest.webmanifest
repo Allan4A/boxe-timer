@@ -1,0 +1,15 @@
+{
+  "name": "Timer Boxe Maison",
+  "short_name": "Boxe",
+  "description": "Timer d'entraînement boxe et renforcement à domicile",
+  "start_url": "./boxing_timer.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#111827",
+  "lang": "fr",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
