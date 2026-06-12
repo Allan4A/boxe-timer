@@ -150,6 +150,12 @@
   .phase-name { font-size: 1.2rem; font-weight: 700; margin: 6px 0 2px; }
   .phase-desc { font-size: 0.9rem; color: var(--muted); min-height: 1.3em; margin-bottom: 4px; }
   .round-indicator { font-size: 0.85rem; font-weight: 600; color: var(--round); min-height: 1.2em; }
+  .capy-mode { font-size: 0.75rem; color: var(--muted); min-height: 1.2em; }
+  .vid-btn {
+    display: inline-block; font-size: 0.7rem; font-weight: 600; font-family: "Inter", sans-serif;
+    background: var(--tile2); color: var(--brand); text-decoration: none;
+    border-radius: 8px; padding: 2px 8px; vertical-align: middle;
+  }
   .time-display {
     font-size: 4.2rem; font-weight: 800; font-variant-numeric: tabular-nums;
     letter-spacing: -0.02em; line-height: 1.1; margin: 4px 0 14px;
@@ -348,9 +354,10 @@
         <span class="badge" id="phaseBadge">cardio</span>
       </div>
       <div class="illu" id="illu"></div>
-      <div class="phase-name" id="phaseName">—</div>
+      <div class="phase-name"><span id="phaseName">—</span> <a id="vidBtn" class="vid-btn hidden" target="_blank" rel="noopener" title="Voir la technique en vidéo">▶ vidéo</a></div>
       <div class="phase-desc" id="phaseDesc"></div>
       <div class="round-indicator" id="roundIndicator"></div>
+      <div class="capy-mode" id="capyMode"></div>
       <div class="time-display" id="timeDisplay">00:00</div>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       <div class="reps-row hidden" id="repsRow">
@@ -414,6 +421,12 @@
         <div class="stat-tile"><div class="v" id="statStreak">0</div><div class="l">Série (semaines)</div></div>
         <div class="stat-tile"><div class="v" id="statRounds">0</div><div class="l">Rounds de boxe</div></div>
         <div class="stat-tile"><div class="v" id="statLevel">+0 s</div><div class="l">Progression</div></div>
+        <div class="stat-tile"><div class="v" id="statKcal">0</div><div class="l">kcal brûlées</div></div>
+      </div>
+      <div class="m-row">
+        <label for="weightInput" style="font-size:.82rem">⚖️ Poids :</label>
+        <input type="number" id="weightInput" min="30" max="250" step="0.5" style="width:80px"> kg
+        <span style="font-size:.72rem;color:var(--muted)">— sert à l'estimation des calories</span>
       </div>
       <div class="stats-split" id="statsSplit"></div>
       <div class="vol-title hidden" id="volTitle">💪 Volume par exercice (reps comptées)</div>

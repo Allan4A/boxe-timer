@@ -142,6 +142,178 @@ const PROGRAMS_ALLAN = {
       { name: "Finisher — KB swings 10 kg", tag: "cardio", dur: 60, desc: "Swings explosifs, hanches dynamiques" },
       { name: "Étirements", tag: "rest", dur: 180, desc: "Étirements quadriceps, ischios, mollets, fessiers" }
     ]
+  },
+  xl: {
+    label: "Complet XL",
+    phases: [
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Corde imaginaire, rotations, mobilité épaules et hanches" },
+      { name: "Shadow 1 — Jabs & directs", tag: "shadow", dur: 180, desc: "Jab, jab-cross, déplacements avant/arrière" },
+      { name: "Shadow 2 — Crochets & uppercuts", tag: "shadow", dur: 180, desc: "Crochets, uppercuts, enchaînements 3-4 coups" },
+      { name: "Installation", tag: "rest", dur: 30, desc: "Prépare KB, sandbag et élastique 40 kg" },
+      { name: "Tour 1 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Kettlebell à la poitrine, descente contrôlée" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Pose la KB, place-toi devant le sandbag" },
+      { name: "Tour 1 — Squat sandbag 30 kg", tag: "circuit", dur: 45, desc: "Sandbag serré contre la poitrine, dos droit" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Garde le sandbag à portée" },
+      { name: "Tour 1 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, tire le sandbag vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Range le sandbag, attrape l'élastique 40 kg" },
+      { name: "Tour 1 — Row élastique 40 kg", tag: "circuit", dur: 45, desc: "Tirage horizontal, omoplates serrées" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche, bois une gorgée" },
+      { name: "Tour 2 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Kettlebell à la poitrine, descente contrôlée" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Pose la KB, place-toi devant le sandbag" },
+      { name: "Tour 2 — Squat sandbag 30 kg", tag: "circuit", dur: 45, desc: "Sandbag serré contre la poitrine, dos droit" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Garde le sandbag à portée" },
+      { name: "Tour 2 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, tire le sandbag vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Range le sandbag, attrape l'élastique 40 kg" },
+      { name: "Tour 2 — Row élastique 40 kg", tag: "circuit", dur: 45, desc: "Tirage horizontal, omoplates serrées" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche, bois une gorgée" },
+      { name: "Tour 3 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Dernier tour : garde la technique propre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Pose la KB, place-toi devant le sandbag" },
+      { name: "Tour 3 — Squat sandbag 30 kg", tag: "circuit", dur: 45, desc: "Sandbag serré contre la poitrine, dos droit" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Garde le sandbag à portée" },
+      { name: "Tour 3 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, tire le sandbag vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Range le sandbag, attrape l'élastique 40 kg" },
+      { name: "Tour 3 — Row élastique 40 kg", tag: "circuit", dur: 45, desc: "Tirage horizontal, omoplates serrées" },
+      { name: "Repos", tag: "rest", dur: 60, desc: "Grosse récupération, mets-toi en garde" },
+      { name: "Round 1 — Technique (70%)", tag: "round", dur: 120, desc: "Shadow rythme round : combinaisons propres à 70%" },
+      { name: "Repos", tag: "rest", dur: 30, desc: "Récupération entre rounds" },
+      { name: "Round 2 — Vitesse", tag: "round", dur: 120, desc: "Volume maximal, mains relâchées, sans pause" },
+      { name: "Repos", tag: "rest", dur: 30, desc: "Récupération entre rounds" },
+      { name: "Round 3 — Niveau bas", tag: "round", dur: 120, desc: "Flexions + frappes au corps imaginaires, jambes actives" },
+      { name: "Repos", tag: "rest", dur: 30, desc: "Récupération entre rounds" },
+      { name: "Round 4 — Max effort", tag: "round", dur: 120, desc: "Dernier round : intensité maximale, vide tout" },
+      { name: "Repos + installation", tag: "rest", dur: 60, desc: "Respire, attrape les haltères 10 kg" },
+      { name: "Tour 1 — Curl haltères 10 kg", tag: "circuit", dur: 45, desc: "Curls biceps alternés, mouvement contrôlé" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Garde les haltères en main" },
+      { name: "Tour 1 — Press épaules haltères", tag: "circuit", dur: 45, desc: "Développé militaire haltères, gainage" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Pose les haltères, prends l'élastique 15 kg" },
+      { name: "Tour 1 — Face-pull élastique 15 kg", tag: "circuit", dur: 45, desc: "Tirage visage, coudes hauts" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Secoue les bras" },
+      { name: "Tour 2 — Curl haltères 10 kg", tag: "circuit", dur: 45, desc: "Curls biceps alternés, mouvement contrôlé" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Garde les haltères en main" },
+      { name: "Tour 2 — Press épaules haltères", tag: "circuit", dur: 45, desc: "Développé militaire haltères, gainage" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Pose les haltères, prends l'élastique 15 kg" },
+      { name: "Tour 2 — Face-pull élastique 15 kg", tag: "circuit", dur: 45, desc: "Tirage visage, coudes hauts" },
+      { name: "Repos", tag: "rest", dur: 60, desc: "Dernière ligne droite, mets-toi en garde" },
+      { name: "Shadow 3 — Défense & contre", tag: "shadow", dur: 180, desc: "Esquives, blocages, contres immédiats" },
+      { name: "Finisher — KB swings 10 kg", tag: "cardio", dur: 60, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Au sol pour le gainage final" },
+      { name: "Finisher — Planche", tag: "circuit", dur: 45, desc: "Gainage ventral strict, corps aligné, respire" },
+      { name: "Récupération & étirements", tag: "rest", dur: 240, desc: "Étirements complets, respiration profonde" }
+    ]
+  },
+  renfo: {
+    label: "Renfo sans boxe",
+    phases: [
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Marche rapide sur place, rotations, mobilité complète" },
+      { name: "Installation", tag: "rest", dur: 30, desc: "Prépare KB, sandbag et haltères" },
+      { name: "Tour 1 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Kettlebell à la poitrine, descente contrôlée" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 1 — Pompes", tag: "circuit", dur: 45, desc: "Rythme régulier, gainage serré" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Place-toi devant le sandbag" },
+      { name: "Tour 1 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, dos plat, tire vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape les haltères" },
+      { name: "Tour 1 — Press épaules haltères", tag: "circuit", dur: 45, desc: "Développé militaire 10 kg, gainage" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Reviens au sandbag" },
+      { name: "Tour 1 — Soulevé de terre roumain sandbag", tag: "circuit", dur: 45, desc: "Hanches en arrière, dos plat, ischio-jambiers" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche, bois une gorgée" },
+      { name: "Tour 2 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Kettlebell à la poitrine, descente contrôlée" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 2 — Pompes", tag: "circuit", dur: 45, desc: "Rythme régulier, gainage serré" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Place-toi devant le sandbag" },
+      { name: "Tour 2 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, dos plat, tire vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape les haltères" },
+      { name: "Tour 2 — Press épaules haltères", tag: "circuit", dur: 45, desc: "Développé militaire 10 kg, gainage" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Reviens au sandbag" },
+      { name: "Tour 2 — Soulevé de terre roumain sandbag", tag: "circuit", dur: 45, desc: "Hanches en arrière, dos plat, ischio-jambiers" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche, bois une gorgée" },
+      { name: "Tour 3 — Squat goblet KB 10 kg", tag: "circuit", dur: 45, desc: "Dernier tour : technique impeccable" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 3 — Pompes", tag: "circuit", dur: 45, desc: "Rythme régulier, gainage serré" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Place-toi devant le sandbag" },
+      { name: "Tour 3 — Row sandbag 30 kg", tag: "circuit", dur: 45, desc: "Buste penché, dos plat, tire vers le ventre" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape les haltères" },
+      { name: "Tour 3 — Press épaules haltères", tag: "circuit", dur: 45, desc: "Développé militaire 10 kg, gainage" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Reviens au sandbag" },
+      { name: "Tour 3 — Soulevé de terre roumain sandbag", tag: "circuit", dur: 45, desc: "Hanches en arrière, dos plat, ischio-jambiers" },
+      { name: "Repos actif", tag: "rest", dur: 60, desc: "Marche, prépare les haltères et l'élastique 15 kg" },
+      { name: "Bras 1 — Curl haltères 10 kg", tag: "circuit", dur: 45, desc: "Curls biceps alternés, contrôle" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Prends l'élastique 15 kg" },
+      { name: "Bras 1 — Face-pull élastique 15 kg", tag: "circuit", dur: 45, desc: "Tirage visage, coudes hauts" },
+      { name: "Repos", tag: "rest", dur: 45, desc: "Récupère avant le second passage" },
+      { name: "Bras 2 — Curl haltères 10 kg", tag: "circuit", dur: 45, desc: "Curls biceps alternés, contrôle" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Prends l'élastique 15 kg" },
+      { name: "Bras 2 — Face-pull élastique 15 kg", tag: "circuit", dur: 45, desc: "Tirage visage, coudes hauts" },
+      { name: "Repos", tag: "rest", dur: 30, desc: "Attrape la kettlebell pour le finisher" },
+      { name: "Finisher — KB swings 10 kg", tag: "cardio", dur: 60, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 30, desc: "Au sol pour le gainage final" },
+      { name: "Finisher — Planche", tag: "circuit", dur: 60, desc: "Gainage ventral strict, corps aligné, respire" },
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Étirements complets, respiration profonde" }
+    ]
+  },
+  hiit: {
+    label: "Cardio HIIT",
+    phases: [
+      { name: "Échauffement", tag: "cardio", dur: 240, desc: "Montées de genoux progressives, rotations, chevilles" },
+      { name: "Tour 1 — Burpees", tag: "cardio", dur: 30, desc: "Squat, planche, saut : enchaîne à ton rythme, dos plat" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 1 — Squats sautés", tag: "cardio", dur: 30, desc: "Explosif, réception amortie genoux fléchis" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 1 — Mountain climbers", tag: "cardio", dur: 30, desc: "En planche, genoux vers la poitrine en alternance rapide" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape la kettlebell" },
+      { name: "Tour 1 — KB swings 10 kg", tag: "cardio", dur: 30, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 45, desc: "Grosse respiration, pose la KB" },
+      { name: "Tour 2 — Burpees", tag: "cardio", dur: 30, desc: "Squat, planche, saut : enchaîne à ton rythme" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 2 — Squats sautés", tag: "cardio", dur: 30, desc: "Explosif, réception amortie" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 2 — Mountain climbers", tag: "cardio", dur: 30, desc: "Rythme rapide, bassin stable" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape la kettlebell" },
+      { name: "Tour 2 — KB swings 10 kg", tag: "cardio", dur: 30, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 45, desc: "Grosse respiration, pose la KB" },
+      { name: "Tour 3 — Burpees", tag: "cardio", dur: 30, desc: "Mi-parcours : tiens le rythme" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 3 — Squats sautés", tag: "cardio", dur: 30, desc: "Explosif, réception amortie" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 3 — Mountain climbers", tag: "cardio", dur: 30, desc: "Rythme rapide, bassin stable" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape la kettlebell" },
+      { name: "Tour 3 — KB swings 10 kg", tag: "cardio", dur: 30, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 45, desc: "Grosse respiration, pose la KB" },
+      { name: "Tour 4 — Burpees", tag: "cardio", dur: 30, desc: "Avant-dernier tour : accroche-toi" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 4 — Squats sautés", tag: "cardio", dur: 30, desc: "Explosif, réception amortie" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 4 — Mountain climbers", tag: "cardio", dur: 30, desc: "Rythme rapide, bassin stable" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape la kettlebell" },
+      { name: "Tour 4 — KB swings 10 kg", tag: "cardio", dur: 30, desc: "Swings explosifs, hanches dynamiques" },
+      { name: "Repos", tag: "rest", dur: 45, desc: "Dernier tour à venir : respire profondément" },
+      { name: "Tour 5 — Burpees", tag: "cardio", dur: 30, desc: "Dernier tour : vide tout" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 5 — Squats sautés", tag: "cardio", dur: 30, desc: "Explosif jusqu'au bout" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Respire" },
+      { name: "Tour 5 — Mountain climbers", tag: "cardio", dur: 30, desc: "Sprint final en planche" },
+      { name: "Repos", tag: "rest", dur: 15, desc: "Attrape la kettlebell" },
+      { name: "Tour 5 — KB swings 10 kg", tag: "cardio", dur: 30, desc: "Trente dernières secondes : tout donner" },
+      { name: "Étirements", tag: "rest", dur: 240, desc: "Retour au calme complet, respiration profonde" }
+    ]
+  },
+  mobilite: {
+    label: "Mobilité & récup",
+    phases: [
+      { name: "Respiration profonde", tag: "rest", dur: 60, desc: "Assis ou debout : inspire 4 s par le nez, souffle 6 s par la bouche" },
+      { name: "Cercles nuque & épaules", tag: "circuit", dur: 120, desc: "Cercles lents de la tête puis des épaules, dans les deux sens" },
+      { name: "Cat-cow — mobilité du dos", tag: "circuit", dur: 120, desc: "À 4 pattes : arrondis puis creuse lentement le dos en respirant" },
+      { name: "Rotations de hanches", tag: "circuit", dur: 120, desc: "Debout, cercles amples du bassin puis genou levé en rotation" },
+      { name: "Fentes dynamiques légères", tag: "circuit", dur: 90, desc: "Grandes fentes lentes en avançant, buste droit, sans charge" },
+      { name: "Planche douce", tag: "circuit", dur: 60, desc: "Gainage tranquille, corps aligné, respiration régulière" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Relâche tout" },
+      { name: "Bird-dog lent", tag: "circuit", dur: 40, desc: "À 4 pattes : bras et jambe opposés tendus, 3 s de pause en haut" },
+      { name: "Repos", tag: "rest", dur: 20, desc: "Passe au sol pour les étirements" },
+      { name: "Étirement ischio-jambiers", tag: "rest", dur: 90, desc: "Jambe tendue sur un support : penche-toi doucement, dos long" },
+      { name: "Étirement quadriceps", tag: "rest", dur: 90, desc: "Debout, talon vers la fesse, genoux serrés — change à mi-temps" },
+      { name: "Étirement épaules & pectoraux", tag: "rest", dur: 90, desc: "Bras contre l'encadrement de porte, ouvre la poitrine" },
+      { name: "Étirement du dos — posture de l'enfant", tag: "rest", dur: 90, desc: "Assis sur les talons, bras allongés devant, front au sol" },
+      { name: "Respiration finale", tag: "rest", dur: 180, desc: "Allongé ou assis : respiration lente, relâche chaque muscle" }
+    ]
   }
 };
 
@@ -257,12 +429,12 @@ const PROFILES = {
   allan: {
     name: "Allan", avatar: "🥊", color: "#FF6B4A",
     programs: PROGRAMS_ALLAN, progression: true, allowHard: true,
-    defaultProgram: "complet", note: null
+    defaultProgram: "complet", defaultWeight: 75, note: null
   },
   liora: {
     name: "Liora", avatar: "🧘‍♀️", color: "#5F8F7B",
     programs: PROGRAMS_LIORA, progression: false, allowHard: false,
-    defaultProgram: "complet",
+    defaultProgram: "complet", defaultWeight: 60,
     note: "🤰 Séances adaptées à la grossesse : reste toujours en aisance respiratoire (tu dois pouvoir parler), hydrate-toi, évite la surchauffe. Stoppe en cas de douleur, contraction, vertige ou essoufflement inhabituel. Programme à faire valider par ta sage-femme ou ton médecin."
   }
 };
@@ -271,6 +443,16 @@ const PROFILES = {
 const TAG_COLORS = { shadow: "#5F8F7B", round: "#FF6B4A", circuit: "#6E4E3A", cardio: "#C97B4A", rest: "#A39888" };
 const TAGS = ["shadow", "round", "circuit", "cardio", "rest"];
 const PREP_DUR = 5;
+/* Calories : méthode MET (kcal/min = MET × poids × 0,0175) par type de phase */
+const MET = { shadow: 7.5, round: 9, circuit: 6, cardio: 7, rest: 1.5 };
+const CAPY_DEVISES = [
+  "Le progrès, c'est capytal.",
+  "Capytalise sur la durée.",
+  "Un pas de capybara à la fois.",
+  "Capy zen, capy fit.",
+  "Capy ou pas capy, tu avances.",
+  "Sois capyble."
+];
 const INTENSITY = {
   facile:    { work: 0.8, rest: 1.2, label: "Facile" },
   normal:    { work: 1,   rest: 1,   label: "Normal" },
@@ -313,6 +495,10 @@ function illuKey(p) {
   const n = (p.name || "").toLowerCase();
   if (n.includes("échauffement")) return "rope";
   if (n.includes("marche")) return "walk";
+  if (n.includes("burpee")) return "jump";
+  if (n.includes("climber") || n.includes("planche")) return "pushup";
+  if (n.includes("cat-cow")) return "birddog";
+  if (n.includes("cercle") || n.includes("rotation")) return "walk";
   if (n.includes("bird-dog")) return "birddog";
   if (n.includes("gainage latéral")) return "sideplank";
   if (n.includes("respiration") || n.includes("bascule")) return "rest";
@@ -351,6 +537,7 @@ function illuSvg(key) {
 
 /* ============ ÉTAT ============ */
 let profileId = null;
+let weight = 75;
 let currentProgram = "complet";
 let intensity = "normal";
 let durTarget = "auto";
@@ -383,8 +570,11 @@ function exName(n) {
 function repsEligible(p) {
   if (!p) return false;
   if (p.tag === "circuit") return true;
-  if (p.tag === "cardio" && /swing|burpee|squat|pompes|fente/i.test(p.name)) return true;
+  if (p.tag === "cardio" && /swing|burpee|squat|pompes|fente|climber/i.test(p.name)) return true;
   return false;
+}
+function kcalFor(phs) {
+  return Math.round(phs.reduce((a, p) => a + (p.dur / 60) * (MET[p.tag] || 3) * weight * 0.0175, 0));
 }
 function commitReps() {
   if (phaseReps > 0 && phases[phaseIndex]) {
@@ -421,9 +611,11 @@ function loadPrefs() {
   intensity = "normal"; durTarget = "auto"; themePref = "auto";
   soundOn = true; voiceOn = true; vibeOn = true;
   currentProgram = PROFILES[profileId].defaultProgram;
+  weight = PROFILES[profileId].defaultWeight || 75;
   try {
     const s = JSON.parse(localStorage.getItem(sk("boxingTimerPrefs")) || "{}");
     if (s.program) currentProgram = s.program;
+    if (s.weight && s.weight > 30 && s.weight < 250) weight = s.weight;
     if (s.intensity && INTENSITY[s.intensity]) intensity = s.intensity;
     if (s.durTarget) durTarget = s.durTarget;
     if (s.themePref) themePref = s.themePref;
@@ -435,7 +627,7 @@ function loadPrefs() {
 function savePrefs() {
   try {
     localStorage.setItem(sk("boxingTimerPrefs"), JSON.stringify({
-      program: currentProgram, intensity, durTarget, themePref, soundOn, voiceOn, vibeOn
+      program: currentProgram, intensity, durTarget, themePref, soundOn, voiceOn, vibeOn, weight
     }));
   } catch (e) {}
 }
@@ -676,6 +868,7 @@ function announcePhase(idx) {
     let txt = p.name + ".";
     const ri = roundInfo(idx);
     if (p.tag === "round" && ri) txt = p.name + ". " + ri.replace("/", "sur") + ".";
+    if (Math.random() < 0.22) txt += " " + CAPY_DEVISES[Math.floor(Math.random() * CAPY_DEVISES.length)];
     speak(txt);
   }
 }
@@ -817,6 +1010,19 @@ function setIllu(p) {
   elIllu.innerHTML = illuSvg(illuKey(p));
   elIllu.style.color = TAG_COLORS[p.tag] || TAG_COLORS.rest;
 }
+function setCapyVid(p, isPrep) {
+  const cm = $("capyMode"), vb = $("vidBtn");
+  if (cm) {
+    if (isPrep) cm.textContent = "🦫 Installe-toi, on démarre bientôt";
+    else cm.textContent = p.tag === "rest" ? "🦫🧘 Mode zen — souffle" : "🦫🔥 Mode sport";
+  }
+  if (vb) {
+    const show = !isPrep && p.tag !== "rest";
+    vb.classList.toggle("hidden", !show);
+    if (show) vb.href = "https://www.youtube.com/results?search_query=" +
+      encodeURIComponent(exName(p.name) + " exercice technique");
+  }
+}
 function renderPhase() {
   if (prepMode) {
     elName.textContent = "Préparation";
@@ -827,6 +1033,7 @@ function renderPhase() {
     elRound.textContent = "";
     elFill.style.background = TAG_COLORS.rest;
     setIllu(phases[0]);
+    setCapyVid(phases[0], true);
     renderTime();
     return;
   }
@@ -837,6 +1044,7 @@ function renderPhase() {
   elBadge.className = "badge " + p.tag;
   elCounter.textContent = `Phase ${phaseIndex + 1} / ${phases.length}`;
   elRound.textContent = p.tag === "round" ? roundInfo(phaseIndex) : "";
+  setCapyVid(p, false);
   elFill.style.background = TAG_COLORS[p.tag];
   setIllu(p);
   phases.forEach((_, i) => {
@@ -881,8 +1089,8 @@ function renderBanner() {
 function renderDurInfo() {
   const total = phases.reduce((a, p) => a + p.dur, 0);
   const prog = getProgram(currentProgram);
-  $("durInfo").textContent = "Séance effective : ≈ " + Math.round(total / 60) + " min (" +
-    prog.label + ", " + INTENSITY[intensity].label +
+  $("durInfo").textContent = "Séance effective : ≈ " + Math.round(total / 60) + " min · ≈ " +
+    kcalFor(phases) + " kcal (" + prog.label + ", " + INTENSITY[intensity].label +
     (durTarget !== "auto" ? ", cible " + durTarget + " min" : "") + ")";
 }
 function renderEquip() {
@@ -915,6 +1123,10 @@ function renderStats() {
     return a + (pr ? pr.phases.filter(x => x.tag === "round").length : 0);
   }, 0);
   $("statLevel").textContent = "+" + (progLevel * 5) + " s";
+  const elK = $("statKcal");
+  if (elK) elK.textContent = history.reduce((a, h) => a + (h.k || 0), 0).toLocaleString("fr-FR");
+  const wIn = $("weightInput");
+  if (wIn && document.activeElement !== wIn) wIn.value = weight;
   const split = {};
   history.forEach(h => { split[h.p] = (split[h.p] || 0) + 1; });
   $("statsSplit").textContent = history.length
@@ -1128,7 +1340,7 @@ function finishSession() {
   cancelAnimationFrame(rafId);
   releaseWake();
   const total = phases.reduce((a, p) => a + p.dur, 0);
-  const entry = { d: new Date().toISOString(), p: currentProgram, t: total };
+  const entry = { d: new Date().toISOString(), p: currentProgram, t: total, k: kcalFor(phases) };
   if (Object.keys(sessionReps).length) entry.r = sessionReps;
   history.push(entry);
   saveHistory();
@@ -1137,17 +1349,9 @@ function finishSession() {
   renderStats();
   const wkNow = weekKey(new Date());
   const n = history.filter(h => weekKey(h.d) === wkNow).length;
-  const DEVISES = [
-    "Le progrès, c'est capytal.",
-    "Capytalise sur la durée.",
-    "Un pas de capybara à la fois.",
-    "Capy zen, capy fit.",
-    "Capy ou pas capy, tu avances.",
-    "Sois capyble."
-  ];
-  const devise = DEVISES[Math.floor(Math.random() * DEVISES.length)];
-  $("finishMsg").textContent = "« " + devise + " » — Séance " + n + " cette semaine, " +
-    Math.round(total / 60) + " min. Hydrate-toi et récupère.";
+  const devise = CAPY_DEVISES[Math.floor(Math.random() * CAPY_DEVISES.length)];
+  $("finishMsg").textContent = "« " + devise + " » — Séance " + n + " cette semaine : " +
+    Math.round(total / 60) + " min, ≈ " + (entry.k || 0) + " kcal brûlées. Hydrate-toi et récupère.";
   $("noteInput").value = "";
   $("btnSaveNote").textContent = "Enregistrer la note";
   speak("Séance terminée. " + devise);
@@ -1289,6 +1493,11 @@ $("btnRestart").addEventListener("click", reset);
 $("timerCard").addEventListener("click", () => { if (started) startPause(); });
 $("repPlus").addEventListener("click", e => { e.stopPropagation(); addRep(1); });
 $("repMinus").addEventListener("click", e => { e.stopPropagation(); addRep(-1); });
+$("vidBtn").addEventListener("click", e => e.stopPropagation());
+$("weightInput").addEventListener("change", e => {
+  const v = parseFloat(e.target.value);
+  if (v > 30 && v < 250) { weight = v; savePrefs(); renderDurInfo(); }
+});
 $("btnProfile").addEventListener("click", showProfileScreen);
 document.querySelectorAll("#intensitySelect button").forEach(b =>
   b.addEventListener("click", () => selectIntensity(b.dataset.int)));
