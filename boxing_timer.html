@@ -160,6 +160,17 @@
   .total-remaining { font-size: 0.85rem; color: var(--muted); }
   .total-remaining strong { color: var(--text); font-variant-numeric: tabular-nums; }
   .tap-hint { font-size: 0.7rem; color: var(--muted); opacity: .7; margin-top: 6px; }
+  /* Compteur de répétitions */
+  .reps-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 0 12px; }
+  .reps-row button { border: none; cursor: pointer; font-family: "Poppins", sans-serif; font-weight: 700; }
+  #repPlus { background: var(--cta); color: #fff; border-radius: 14px; font-size: 1.2rem; padding: 10px 28px; }
+  #repMinus { background: var(--tile2); color: var(--text); border-radius: 10px; font-size: 1.1rem; padding: 9px 16px; }
+  .rep-val { font-family: "Poppins", sans-serif; font-variant-numeric: tabular-nums; font-size: 1.3rem; font-weight: 800; min-width: 70px; }
+  .rep-lbl { display: block; font-size: 0.6rem; color: var(--muted); font-weight: 500; }
+  .vol-title { font-size: 0.8rem; font-weight: 700; margin: 10px 0 4px; }
+  .vol-list .v-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .vol-list .v-row:last-child { border-bottom: none; }
+  .vol-list .v-tot { color: var(--muted); white-space: nowrap; }
   /* Contrôles */
   .controls { display: flex; gap: 8px; margin-bottom: 24px; }
   .controls button {
@@ -342,6 +353,11 @@
       <div class="round-indicator" id="roundIndicator"></div>
       <div class="time-display" id="timeDisplay">00:00</div>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="reps-row hidden" id="repsRow">
+        <button id="repMinus">−</button>
+        <div class="rep-val"><span id="repCount">0</span><span class="rep-lbl">reps comptées</span></div>
+        <button id="repPlus">+1</button>
+      </div>
       <div class="total-remaining">Temps total restant : <strong id="totalRemaining">00:00</strong></div>
       <div class="tap-hint">Touche le cadran pour mettre en pause / reprendre</div>
     </div>
@@ -400,6 +416,8 @@
         <div class="stat-tile"><div class="v" id="statLevel">+0 s</div><div class="l">Progression</div></div>
       </div>
       <div class="stats-split" id="statsSplit"></div>
+      <div class="vol-title hidden" id="volTitle">💪 Volume par exercice (reps comptées)</div>
+      <div class="vol-list" id="volList"></div>
       <div class="hist-list" id="histList"></div>
       <button id="btnClearHist">Effacer l'historique</button>
     </details>

@@ -373,6 +373,37 @@ let vibeOn = true;
 let history = [];
 let progLevel = 0;
 let customs = {};
+let sessionReps = {};
+let phaseReps = 0;
+
+/* ============ COMPTEUR DE RÉPÉTITIONS ============ */
+function exName(n) {
+  return (n || "").replace(/^(Tour \d+|Circuit \d+[A-D]?|Abdos doux|Finisher)\s*—\s*/, "").trim();
+}
+function repsEligible(p) {
+  if (!p) return false;
+  if (p.tag === "circuit") return true;
+  if (p.tag === "cardio" && /swing|burpee|squat|pompes|fente/i.test(p.name)) return true;
+  return false;
+}
+function commitReps() {
+  if (phaseReps > 0 && phases[phaseIndex]) {
+    const k = exName(phases[phaseIndex].name);
+    sessionReps[k] = (sessionReps[k] || 0) + phaseReps;
+  }
+  phaseReps = 0;
+}
+function renderReps() {
+  const el = document.getElementById("repCount");
+  if (el) el.textContent = phaseReps;
+  const row = document.getElementById("repsRow");
+  if (row) row.classList.toggle("hidden", prepMode || !started || !repsEligible(phases[phaseIndex]));
+}
+function addRep(d) {
+  phaseReps = Math.max(0, phaseReps + d);
+  if (d > 0) vibrate(25);
+  renderReps();
+}
 
 /* ============ PERSISTANCE (cloisonnée par profil) ============ */
 function sk(base) { return base + "." + profileId; }
@@ -892,6 +923,30 @@ function renderStats() {
         return (pr ? pr.label : k) + " ×" + v;
       }).join(" · ")
     : "Aucune séance enregistrée pour l'instant.";
+  // Volume par exercice (reps comptées)
+  const vol = {};
+  history.forEach(h => {
+    if (h.r) Object.entries(h.r).forEach(([k, v]) => {
+      if (!vol[k]) vol[k] = { t: 0, l: 0 };
+      vol[k].t += v;
+      vol[k].l = v;
+    });
+  });
+  const volEntries = Object.entries(vol).sort((a, b) => b[1].t - a[1].t).slice(0, 8);
+  $("volTitle").classList.toggle("hidden", !volEntries.length);
+  const vl = $("volList");
+  vl.innerHTML = "";
+  volEntries.forEach(([k, v]) => {
+    const row = document.createElement("div");
+    row.className = "v-row";
+    const n = document.createElement("span");
+    n.textContent = k;
+    const t = document.createElement("span");
+    t.className = "v-tot";
+    t.textContent = v.t + " reps au total · dernière : " + v.l;
+    row.appendChild(n); row.appendChild(t);
+    vl.appendChild(row);
+  });
   const list = $("histList");
   list.innerHTML = "";
   history.slice(-8).reverse().forEach(h => {
@@ -941,6 +996,7 @@ function tick(now) {
       beepStart();
       announcePhase(0);
       renderPhase();
+      renderReps();
     } else {
       renderTime();
     }
@@ -973,6 +1029,7 @@ function tick(now) {
 }
 
 function nextPhase() {
+  commitReps();
   if (phaseIndex >= phases.length - 1) { finishSession(); return; }
   phaseIndex++;
   remaining = phases[phaseIndex].dur;
@@ -982,6 +1039,7 @@ function nextPhase() {
   if (phases[phaseIndex].tag !== "rest") beepStart();
   announcePhase(phaseIndex);
   renderPhase();
+  renderReps();
 }
 
 function startPause() {
@@ -995,6 +1053,7 @@ function startPause() {
       lastBeepSecond = null;
       speak("Préparation. Premier exercice : " + phases[0].name + ".");
       renderPhase();
+      renderReps();
     }
     acquireWake();
     lastTick = performance.now();
@@ -1039,6 +1098,8 @@ function reset() {
   restoreMusic();
   releaseWake();
   if (!getProgram(currentProgram)) currentProgram = PROFILES[profileId].defaultProgram;
+  sessionReps = {};
+  phaseReps = 0;
   progLevel = computeProgLevel();
   phases = buildPhases();
   buildList();
@@ -1057,15 +1118,19 @@ function reset() {
   renderEquip();
   renderStats();
   renderPhase();
+  renderReps();
 }
 
 function finishSession() {
+  commitReps();
   running = false;
   started = false;
   cancelAnimationFrame(rafId);
   releaseWake();
   const total = phases.reduce((a, p) => a + p.dur, 0);
-  history.push({ d: new Date().toISOString(), p: currentProgram, t: total });
+  const entry = { d: new Date().toISOString(), p: currentProgram, t: total };
+  if (Object.keys(sessionReps).length) entry.r = sessionReps;
+  history.push(entry);
   saveHistory();
   progLevel = computeProgLevel();
   renderBanner();
@@ -1222,6 +1287,8 @@ $("btnSkip").addEventListener("click", skip);
 $("btnReset").addEventListener("click", reset);
 $("btnRestart").addEventListener("click", reset);
 $("timerCard").addEventListener("click", () => { if (started) startPause(); });
+$("repPlus").addEventListener("click", e => { e.stopPropagation(); addRep(1); });
+$("repMinus").addEventListener("click", e => { e.stopPropagation(); addRep(-1); });
 $("btnProfile").addEventListener("click", showProfileScreen);
 document.querySelectorAll("#intensitySelect button").forEach(b =>
   b.addEventListener("click", () => selectIntensity(b.dataset.int)));
