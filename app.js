@@ -1121,9 +1121,9 @@ function renderProfileScreen() {
   wrap.appendChild(add);
 }
 function selectProfile(id) {
-  if (!PROFILES[id]) return;
+  if (!getProfile(id)) return;
   profileId = id;
-  const P = PROFILES[id];
+  const P = getProfile(id);
   try { localStorage.setItem("boxingTimerActiveProfile", id); } catch (e) {}
   loadPrefs();
   loadCustoms();
