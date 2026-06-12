@@ -562,6 +562,151 @@ let progLevel = 0;
 let customs = {};
 let sessionReps = {};
 let phaseReps = 0;
+let customProfiles = {};
+let body = null; // données corporelles du profil actif (sexe, âge, taille, poids…)
+
+/* ============ PROFILS DYNAMIQUES ============ */
+function getProfile(id) { return PROFILES[id] || customProfiles[id] || null; }
+function loadCustomProfiles() {
+  try { customProfiles = JSON.parse(localStorage.getItem("capyraProfiles") || "{}"); }
+  catch (e) { customProfiles = {}; }
+  if (!customProfiles || typeof customProfiles !== "object") customProfiles = {};
+}
+function saveCustomProfiles() {
+  try { localStorage.setItem("capyraProfiles", JSON.stringify(customProfiles)); } catch (e) {}
+}
+function defaultBody(P) {
+  return {
+    sex: "h", age: 35, height: 175,
+    weight: (P && P.defaultWeight) || 75,
+    bodyFat: null, activity: 1.55, goal: "forme", deficit: 20
+  };
+}
+
+/* ============ MOTEUR CALORIQUE (méthodologie bible Capyra) ============ */
+function calcIMC(b) { return b.weight / Math.pow(b.height / 100, 2); }
+function imcCategory(imc) {
+  if (imc < 16) return { cat: "Dénutrition sévère", lvl: "⛔", msg: "Un programme de perte de poids est fortement déconseillé. Consulte un médecin avant toute démarche." };
+  if (imc < 17) return { cat: "Dénutrition modérée", lvl: "⚠️", msg: "Un avis médical est vivement recommandé avant de commencer." };
+  if (imc < 18.5) return { cat: "Sous-poids", lvl: "⚠️", msg: "Un programme de perte de poids présenterait des risques. Privilégie le maintien ou la prise de masse." };
+  if (imc < 25) return { cat: "Corpulence normale", lvl: "✅", msg: "" };
+  if (imc < 30) return { cat: "Surpoids", lvl: "ℹ️", msg: "Un déficit modéré et de la régularité produiront des résultats durables." };
+  if (imc < 35) return { cat: "Obésité cat. I", lvl: "ℹ️", msg: "Un suivi médical ponctuel est une bonne idée en parallèle du programme." };
+  if (imc < 40) return { cat: "Obésité cat. II", lvl: "⚠️", msg: "Un suivi médical est recommandé en accompagnement du programme." };
+  return { cat: "Obésité cat. III", lvl: "⚠️", msg: "Un suivi médical est hautement recommandé. Capyra complète — il ne remplace pas un spécialiste." };
+}
+/* BMR : moyenne pondérée de plusieurs équations — coefficient 1,2 pour celles adaptées au profil (principe bible) */
+function calcBMR(b) {
+  const w = b.weight, h = b.height, a = b.age, male = b.sex === "h";
+  const imc = calcIMC(b);
+  const list = [];
+  // Harris-Benedict révisée
+  list.push({ n: "Harris-Benedict", v: male ? 88.362 + 13.397 * w + 4.799 * h - 5.677 * a : 447.593 + 9.247 * w + 3.098 * h - 4.330 * a, c: 1 });
+  // Mifflin-St Jeor
+  list.push({ n: "Mifflin-St Jeor", v: 10 * w + 6.25 * h - 5 * a + (male ? 5 : -161), c: 1 });
+  // Schofield (bandes d'âge OMS)
+  let sch;
+  if (male) sch = a < 30 ? 15.057 * w + 692.2 : a < 60 ? 11.472 * w + 873.1 : 11.711 * w + 587.7;
+  else sch = a < 30 ? 14.818 * w + 486.6 : a < 60 ? 8.126 * w + 845.6 : 9.082 * w + 658.5;
+  list.push({ n: "Schofield", v: sch, c: 1 });
+  // Mifflin ajusté (poids corrigé Devine) — surpoids modéré, coeff 1,2
+  if (imc >= 25 && imc < 35) {
+    const ideal = male ? 50 + 0.9 * (h - 152) : 45.5 + 0.9 * (h - 152);
+    const adjW = ideal + 0.4 * (w - ideal);
+    list.push({ n: "Mifflin ajusté", v: 10 * adjW + 6.25 * h - 5 * a + (male ? 5 : -161), c: 1.2 });
+  }
+  // Katch-McArdle & Cunningham — si masse grasse renseignée, coeff 1,2
+  if (b.bodyFat && b.bodyFat > 3 && b.bodyFat < 60) {
+    const lbm = w * (1 - b.bodyFat / 100);
+    list.push({ n: "Katch-McArdle", v: 370 + 21.6 * lbm, c: 1.2 });
+    list.push({ n: "Cunningham", v: 500 + 22 * lbm, c: 1.2 });
+  }
+  const bmr = list.reduce((s, f) => s + f.v * f.c, 0) / list.reduce((s, f) => s + f.c, 0);
+  return { bmr: Math.round(bmr), formulas: list.length };
+}
+function calcTDEE(b) {
+  const { bmr } = calcBMR(b);
+  let tdee = Math.round(bmr * (b.activity || 1.55) * 0.90); // coefficient de prudence bible
+  if (tdee < bmr) tdee = bmr; // plancher de sécurité
+  return { bmr, tdee };
+}
+function calcTarget(b) {
+  const { bmr, tdee } = calcTDEE(b);
+  let target = tdee, label = "maintien";
+  if (b.goal === "perte") { target = Math.round(tdee * (1 - (b.deficit || 20) / 100)); label = "déficit −" + (b.deficit || 20) + "%"; }
+  if (b.goal === "masse") { target = Math.round(tdee * 1.10); label = "surplus +10%"; }
+  const floor = b.sex === "h" ? 1400 : 1200;
+  return { bmr, tdee, target, label, belowFloor: target < floor, floor };
+}
+function calcMacros(b) {
+  const t = calcTarget(b);
+  const protPerKg = b.goal === "masse" ? 2.2 : b.goal === "perte" ? 1.8 : 2.0;
+  const protG = Math.round(protPerKg * b.weight);
+  const protK = protG * 4;
+  // Lipides : max(plancher 40 g · 0,8 g/kg · 20% des calories), cible ~30%
+  const fatFloorG = Math.max(40, Math.round(0.8 * b.weight), Math.round(t.target * 0.20 / 9));
+  let fatG = Math.max(fatFloorG, Math.round(t.target * 0.30 / 9));
+  let carbK = t.target - protK - fatG * 9;
+  if (carbK < 0) carbK = 0;
+  const carbG = Math.round(carbK / 4);
+  return Object.assign(t, { protG, protPerKg, fatG, fatFloorG, carbG,
+    protPct: Math.round(protK / t.target * 100), fatPct: Math.round(fatG * 9 / t.target * 100), carbPct: Math.round(carbK / t.target * 100) });
+}
+function renderDataPanel() {
+  const out = $("caloResult");
+  if (!out || !body) return;
+  ["dSex","dAge","dHeight","dWeight","dFat","dActivity","dGoal","dDeficit"].forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    const map = { dSex: body.sex, dAge: body.age, dHeight: body.height, dWeight: body.weight,
+      dFat: body.bodyFat || "", dActivity: body.activity, dGoal: body.goal, dDeficit: body.deficit };
+    if (document.activeElement !== el) el.value = map[id];
+  });
+  $("dDeficitRow").classList.toggle("hidden", body.goal !== "perte");
+  const imc = calcIMC(body);
+  const cat = imcCategory(imc);
+  const m = calcMacros(body);
+  let html = "";
+  html += "<div class='c-row'><span>IMC</span><strong>" + imc.toFixed(1) + " — " + cat.lvl + " " + cat.cat + "</strong></div>";
+  if (cat.msg) html += "<div class='c-note'>" + cat.msg + "</div>";
+  html += "<div class='c-row'><span>Métabolisme de base (BMR)</span><strong>" + m.bmr + " kcal/j</strong></div>";
+  html += "<div class='c-row'><span>Dépense totale (TDEE ×0,90 prudence)</span><strong>" + m.tdee + " kcal/j</strong></div>";
+  html += "<div class='c-row'><span>Objectif calorique (" + m.label + ")</span><strong>" + m.target + " kcal/j</strong></div>";
+  if (m.belowFloor) html += "<div class='c-note'>⚠️ Objectif sous le plancher de " + m.floor + " kcal : un suivi médical est recommandé à ce niveau.</div>";
+  if (body.goal === "perte") {
+    const lossKg = (m.tdee - m.target) * 30 / 7700;
+    html += "<div class='c-row'><span>Perte estimée</span><strong>≈ " + lossKg.toFixed(1) + " kg/mois</strong></div>";
+    if (body.deficit < 10) html += "<div class='c-note'>⚠️ Déficit < 10% : trop faible pour produire des résultats significatifs.</div>";
+    if (body.deficit > 25) html += "<div class='c-note'>⚠️ Déficit > 25% : risque de carence et de perte musculaire — consultation médicale recommandée.</div>";
+  }
+  html += "<div class='c-row'><span>Protéines (" + m.protPerKg + " g/kg)</span><strong>" + m.protG + " g · " + m.protPct + "%</strong></div>";
+  html += "<div class='c-row'><span>Glucides</span><strong>" + m.carbG + " g · " + m.carbPct + "%</strong></div>";
+  html += "<div class='c-row'><span>Lipides (plancher " + m.fatFloorG + " g)</span><strong>" + m.fatG + " g · " + m.fatPct + "%</strong></div>";
+  html += "<div class='c-note'>🔬 Capyra croise plusieurs équations scientifiques reconnues, pondérées selon ton profil (" + calcBMR(body).formulas + " formules actives). Estimation — ne remplace pas un avis médical.</div>";
+  out.innerHTML = html;
+}
+function bindDataPanel() {
+  const read = () => {
+    body.sex = $("dSex").value;
+    body.age = parseInt($("dAge").value, 10) || body.age;
+    body.height = parseInt($("dHeight").value, 10) || body.height;
+    body.weight = parseFloat($("dWeight").value) || body.weight;
+    const bf = parseFloat($("dFat").value);
+    body.bodyFat = (bf > 3 && bf < 60) ? bf : null;
+    body.activity = parseFloat($("dActivity").value) || 1.55;
+    body.goal = $("dGoal").value;
+    body.deficit = parseInt($("dDeficit").value, 10) || 20;
+    weight = body.weight;
+    savePrefs();
+    renderDataPanel();
+    renderDurInfo();
+    renderStats();
+  };
+  ["dSex","dAge","dHeight","dWeight","dFat","dActivity","dGoal","dDeficit"].forEach(id => {
+    const el = $(id);
+    if (el) el.addEventListener("change", read);
+  });
+}
 
 /* ============ COMPTEUR DE RÉPÉTITIONS ============ */
 function exName(n) {
@@ -610,12 +755,15 @@ function migrateOldStorage() {
 function loadPrefs() {
   intensity = "normal"; durTarget = "auto"; themePref = "auto";
   soundOn = true; voiceOn = true; vibeOn = true;
-  currentProgram = PROFILES[profileId].defaultProgram;
-  weight = PROFILES[profileId].defaultWeight || 75;
+  currentProgram = getProfile(profileId).defaultProgram;
+  weight = getProfile(profileId).defaultWeight || 75;
+  body = defaultBody(getProfile(profileId));
   try {
     const s = JSON.parse(localStorage.getItem(sk("boxingTimerPrefs")) || "{}");
     if (s.program) currentProgram = s.program;
     if (s.weight && s.weight > 30 && s.weight < 250) weight = s.weight;
+    body = (s.body && typeof s.body === "object") ? Object.assign(defaultBody(getProfile(profileId)), s.body) : defaultBody(getProfile(profileId));
+    body.weight = weight;
     if (s.intensity && INTENSITY[s.intensity]) intensity = s.intensity;
     if (s.durTarget) durTarget = s.durTarget;
     if (s.themePref) themePref = s.themePref;
@@ -627,7 +775,7 @@ function loadPrefs() {
 function savePrefs() {
   try {
     localStorage.setItem(sk("boxingTimerPrefs"), JSON.stringify({
-      program: currentProgram, intensity, durTarget, themePref, soundOn, voiceOn, vibeOn, weight
+      program: currentProgram, intensity, durTarget, themePref, soundOn, voiceOn, vibeOn, weight, body
     }));
   } catch (e) {}
 }
@@ -647,7 +795,7 @@ function loadCustoms() {
 function saveCustoms() {
   try { localStorage.setItem(sk("boxingTimerCustom"), JSON.stringify(customs)); } catch (e) {}
 }
-function getPrograms() { return PROFILES[profileId].programs; }
+function getPrograms() { return getProfile(profileId).programs; }
 function getProgram(key) { return getPrograms()[key] || customs[key] || null; }
 
 /* ============ SEMAINES / PROGRESSION ============ */
@@ -669,7 +817,7 @@ function weekCounts() {
   return c;
 }
 function computeProgLevel() {
-  if (!PROFILES[profileId].progression) return 0;
+  if (!getProfile(profileId).progression) return 0;
   const c = weekCounts();
   let lvl = 0;
   const wk = weekKey(new Date());
@@ -930,7 +1078,8 @@ function totalRemainingSec() {
 function renderProfileScreen() {
   const wrap = $("profileCards");
   wrap.innerHTML = "";
-  Object.entries(PROFILES).forEach(([id, P]) => {
+  const all = Object.assign({}, PROFILES, customProfiles);
+  Object.entries(all).forEach(([id, P]) => {
     const card = document.createElement("div");
     card.className = "profile-card";
     const av = document.createElement("div");
@@ -942,9 +1091,34 @@ function renderProfileScreen() {
     nm.textContent = P.name;
     card.appendChild(av);
     card.appendChild(nm);
+    if (customProfiles[id]) {
+      const del = document.createElement("button");
+      del.className = "pc-del";
+      del.textContent = "✕";
+      del.title = "Supprimer ce profil";
+      del.addEventListener("click", e => {
+        e.stopPropagation();
+        if (confirm("Supprimer le profil " + P.name + " et toutes ses données ?")) {
+          delete customProfiles[id];
+          saveCustomProfiles();
+          try {
+            localStorage.removeItem("boxingTimerPrefs." + id);
+            localStorage.removeItem("boxingTimerHistory." + id);
+            localStorage.removeItem("boxingTimerCustom." + id);
+          } catch (er) {}
+          renderProfileScreen();
+        }
+      });
+      card.appendChild(del);
+    }
     card.addEventListener("click", () => selectProfile(id));
     wrap.appendChild(card);
   });
+  const add = document.createElement("div");
+  add.className = "profile-card pc-add";
+  add.innerHTML = '<div class="pc-avatar" style="background:var(--tile2);color:var(--muted)">+</div><div class="pc-name">Nouveau profil</div>';
+  add.addEventListener("click", obStart);
+  wrap.appendChild(add);
 }
 function selectProfile(id) {
   if (!PROFILES[id]) return;
@@ -969,6 +1143,7 @@ function selectProfile(id) {
   renderProgramButtons();
   edRenderSelect();
   edRenderPhases();
+  renderDataPanel();
   $("profileScreen").classList.add("hidden");
   reset();
 }
@@ -1072,7 +1247,7 @@ function renderTime() {
   elTotal.textContent = fmt(totalRemainingSec());
 }
 function renderBanner() {
-  const P = PROFILES[profileId];
+  const P = getProfile(profileId);
   if (P.note) {
     elBanner.textContent = P.note;
     return;
@@ -1309,7 +1484,7 @@ function reset() {
   if (synth) synth.cancel();
   restoreMusic();
   releaseWake();
-  if (!getProgram(currentProgram)) currentProgram = PROFILES[profileId].defaultProgram;
+  if (!getProgram(currentProgram)) currentProgram = getProfile(profileId).defaultProgram;
   sessionReps = {};
   phaseReps = 0;
   progLevel = computeProgLevel();
@@ -1360,7 +1535,7 @@ function finishSession() {
 }
 
 function selectProgram(prog) {
-  if (!getProgram(prog)) prog = PROFILES[profileId].defaultProgram;
+  if (!getProgram(prog)) prog = getProfile(profileId).defaultProgram;
   currentProgram = prog;
   document.querySelectorAll("#programSelect button").forEach(b =>
     b.classList.toggle("active", b.dataset.prog === prog));
@@ -1481,8 +1656,322 @@ function edDelete() {
     edLoad(null);
     edRenderSelect();
     renderProgramButtons();
-    if (!getProgram(currentProgram)) selectProgram(PROFILES[profileId].defaultProgram);
+    if (!getProgram(currentProgram)) selectProgram(getProfile(profileId).defaultProgram);
   }
+}
+
+/* ============ GÉNÉRATEUR DE SÉANCES ADAPTATIVES ============ */
+const EX_LIB = [
+  { name: "Squat poids du corps", equip: "none", zone: "bas", inj: [], desc: "Pieds largeur d'épaules : plie les genoux comme pour t'asseoir, dos droit, remonte en soufflant" },
+  { name: "Squat goblet KB 10 kg", equip: "kb", zone: "bas", inj: ["genou"], desc: "Kettlebell à la poitrine, descente contrôlée, talons ancrés" },
+  { name: "Squat sandbag 30 kg", equip: "sb", zone: "bas", inj: ["genou", "dos"], desc: "Sandbag serré contre la poitrine, dos droit" },
+  { name: "Fentes alternées", equip: "none", zone: "bas", inj: ["genou"], desc: "Un grand pas devant, genou arrière vers le sol, alterne" },
+  { name: "Soulevé de terre roumain sandbag", equip: "sb", zone: "bas", inj: ["dos"], desc: "Hanches en arrière, dos plat, ischio-jambiers" },
+  { name: "Chaise murale", equip: "none", zone: "bas", inj: ["genou"], desc: "Dos collé au mur, cuisses vers l'horizontale, respire" },
+  { name: "Mollets debout", equip: "none", zone: "bas", inj: [], desc: "Monte lentement sur la pointe des pieds, redescends en douceur" },
+  { name: "Pompes", equip: "none", zone: "haut", inj: ["épaule"], desc: "Corps gainé, coudes à 45°, amplitude contrôlée" },
+  { name: "Pompes au mur", equip: "none", zone: "haut", inj: [], lvlMax: "deb", desc: "Mains sur le mur à hauteur d'épaules, plie puis pousse" },
+  { name: "Row élastique 40 kg", equip: "band", zone: "haut", inj: [], desc: "Tirage horizontal, omoplates serrées, buste droit" },
+  { name: "Row sandbag 30 kg", equip: "sb", zone: "haut", inj: ["dos"], desc: "Buste penché, dos plat, tire vers le ventre" },
+  { name: "Press épaules haltères", equip: "db", zone: "haut", inj: ["épaule"], desc: "Développé au-dessus de la tête, gainage serré" },
+  { name: "Élévations latérales élastique 5 kg", equip: "band", zone: "haut", inj: ["épaule"], desc: "Bras tendus jusqu'à l'horizontale, sans à-coups" },
+  { name: "Curl haltères 10 kg", equip: "db", zone: "haut", inj: [], desc: "Curls biceps alternés, coudes collés au corps" },
+  { name: "Curl élastique", equip: "band", zone: "haut", inj: [], desc: "Debout sur l'élastique, remonte les poignées vers les épaules" },
+  { name: "Face-pull élastique 15 kg", equip: "band", zone: "haut", inj: [], desc: "Tirage vers le visage, coudes hauts, arrière d'épaules" },
+  { name: "Planche", equip: "none", zone: "core", inj: ["épaule"], desc: "Gainage ventral strict, corps aligné, respire" },
+  { name: "Bird-dog", equip: "none", zone: "core", inj: [], desc: "À 4 pattes : bras et jambe opposés tendus, dos neutre" },
+  { name: "Gainage latéral", equip: "none", zone: "core", inj: ["épaule"], desc: "Sur le côté, bassin aligné entre épaules et pieds" },
+  { name: "KB swings 10 kg", equip: "kb", zone: "full", inj: ["dos"], desc: "Swings explosifs, le mouvement vient des hanches" },
+  { name: "Burpees", equip: "none", zone: "full", inj: ["genou", "cheville"], lvl: "int", desc: "Squat, planche, saut : enchaîne à ton rythme" },
+  { name: "Squats sautés", equip: "none", zone: "bas", inj: ["genou", "cheville"], lvl: "int", desc: "Explosif, réception amortie genoux fléchis" },
+  { name: "Mountain climbers", equip: "none", zone: "full", inj: ["épaule", "cheville"], desc: "En planche, genoux vers la poitrine en alternance" }
+];
+function pickExos(equip, injuries, level, zones, n) {
+  const lvlOrder = { deb: 0, int: 1, av: 2 };
+  const ok = EX_LIB.filter(e =>
+    (e.equip === "none" || equip.includes(e.equip)) &&
+    !e.inj.some(i => injuries.includes(i)) &&
+    (!e.lvl || lvlOrder[level] >= lvlOrder[e.lvl]) &&
+    (!e.lvlMax || lvlOrder[level] <= lvlOrder[e.lvlMax])
+  );
+  const out = [];
+  zones.forEach(z => {
+    let c = ok.filter(e => e.zone === z && !out.includes(e));
+    // Intermédiaire/avancé : priorité aux exercices avec charge si disponibles
+    if (level !== "deb") {
+      const eq = c.filter(e => e.equip !== "none");
+      if (eq.length) c = eq;
+    }
+    if (c.length) out.push(c[Math.floor(Math.random() * c.length)]);
+  });
+  let guard = 0;
+  while (out.length < n && guard++ < 50) {
+    const c = ok[Math.floor(Math.random() * ok.length)];
+    if (c && !out.includes(c)) out.push(c);
+  }
+  return out.slice(0, n);
+}
+function genProgram(qa, focus) {
+  const lvl = qa.level;
+  const work = lvl === "deb" ? 30 : lvl === "int" ? 40 : 45;
+  const rest = lvl === "deb" ? 30 : lvl === "int" ? 20 : 15;
+  const target = (qa.duration || 25) * 60;
+  const phases = [];
+  phases.push({ name: "Échauffement", tag: "cardio", dur: 180, desc: "Marche sur place, rotations articulaires complètes, montées de genoux douces" });
+  let fixed = 180 + 180 + 20; // échauffement + étirements + installation
+  if (qa.boxing && focus === "complet") {
+    phases.push({ name: "Shadow — Mise en route", tag: "shadow", dur: 150, desc: "Combinaisons souples, garde haute, déplacements" });
+    fixed += 150;
+  }
+  phases.push({ name: "Installation", tag: "rest", dur: 20, desc: "Prépare ton matériel et une bouteille d'eau" });
+  const zones = focus === "haut" ? ["haut", "haut", "haut", "core"] :
+                focus === "bas" ? ["bas", "bas", "bas", "core"] :
+                ["bas", "haut", "bas", "haut", "core"];
+  const exos = pickExos(qa.equip || [], qa.injuries || [], lvl, zones, zones.length);
+  let roundsBlock = 0;
+  if (qa.boxing && focus === "complet") roundsBlock = 2 * 120 + 2 * 30;
+  const tourDur = exos.length * (work + rest) + 45;
+  let tours = Math.max(1, Math.round((target - fixed - roundsBlock) / tourDur));
+  tours = Math.min(tours, 4);
+  for (let t = 1; t <= tours; t++) {
+    exos.forEach((e, i) => {
+      phases.push({ name: "Tour " + t + " — " + e.name, tag: "circuit", dur: work, desc: e.desc });
+      if (i < exos.length - 1) phases.push({ name: "Repos", tag: "rest", dur: rest, desc: "Respire, prépare l'exercice suivant" });
+    });
+    phases.push({ name: "Repos actif", tag: "rest", dur: 45, desc: "Marche doucement, bois une gorgée" });
+  }
+  if (qa.boxing && focus === "complet") {
+    phases.push({ name: "Round 1 — Technique (70%)", tag: "round", dur: 120, desc: "Shadow rythme round : combinaisons propres" });
+    phases.push({ name: "Repos", tag: "rest", dur: 30, desc: "Récupération entre rounds" });
+    phases.push({ name: "Round 2 — Max effort", tag: "round", dur: 120, desc: "Intensité maximale, vide tout" });
+    phases.push({ name: "Repos", tag: "rest", dur: 30, desc: "Respire profondément" });
+  }
+  phases.push({ name: "Étirements", tag: "rest", dur: 180, desc: "Étire en douceur les muscles travaillés, 20 s par position" });
+  return phases;
+}
+function buildProfileFromQA(qa) {
+  const id = "p" + Date.now();
+  const programs = {
+    complet: { label: "Complet", phases: genProgram(qa, "complet") },
+    haut: { label: "Haut du corps", phases: genProgram(qa, "haut") },
+    bas: { label: "Bas du corps", phases: genProgram(qa, "bas") }
+  };
+  customProfiles[id] = {
+    name: qa.name, avatar: qa.avatar, color: qa.color,
+    programs, progression: qa.goal !== "masse", allowHard: qa.level !== "deb",
+    defaultProgram: "complet", defaultWeight: qa.weight,
+    note: null, qa: { diet: qa.diet, kosherDelay: qa.kosherDelay, level: qa.level, injuries: qa.injuries, equip: qa.equip, boxing: qa.boxing, duration: qa.duration }
+  };
+  saveCustomProfiles();
+  // Données corporelles → prefs du nouveau profil
+  try {
+    localStorage.setItem("boxingTimerPrefs." + id, JSON.stringify({
+      program: "complet", intensity: "normal", durTarget: "auto", themePref: "auto",
+      soundOn: true, voiceOn: true, vibeOn: true, weight: qa.weight,
+      body: { sex: qa.sex, age: qa.age, height: qa.height, weight: qa.weight, bodyFat: qa.bodyFat, activity: qa.activity, goal: qa.goal, deficit: qa.deficit }
+    }));
+  } catch (e) {}
+  return id;
+}
+
+/* ============ QUESTIONNAIRE D'ONBOARDING ============ */
+let qa = {};
+let obStep = 0;
+const OB_AVATARS = ["💪", "🏃‍♀️", "🏋️", "🤸‍♂️", "🚴‍♀️", "🧗", "🥊", "🦫"];
+const OB_COLORS = ["#FF6B4A", "#5F8F7B", "#6E4E3A", "#C97B4A", "#2E2E2E"];
+function obChoices(field, opts, multi) {
+  return '<div class="q-grid">' + opts.map(o =>
+    '<button type="button" class="q-choice' +
+    ((multi ? (qa[field] || []).includes(o.v) : qa[field] === o.v) ? " sel" : "") +
+    '" data-f="' + field + '" data-v="' + o.v + '" data-multi="' + (multi ? 1 : 0) + '">' +
+    o.l + (o.d ? '<span class="q-d">' + o.d + "</span>" : "") + "</button>").join("") + "</div>";
+}
+function obNum(field, label, ph) {
+  return '<label class="q-lbl">' + label + '</label><input type="number" class="q-in" id="qi_' + field + '" value="' + (qa[field] ?? "") + '" placeholder="' + (ph || "") + '">';
+}
+const OB_STEPS = [
+  {
+    title: "Bienvenue chez Capyra 🦫",
+    render: () => '<p class="q-p">Quelques questions pour créer ton profil et générer tes séances sur mesure. « Capy mind, Happy life. »</p>' +
+      '<label class="q-lbl">Ton prénom</label><input type="text" class="q-in" id="qi_name" value="' + (qa.name || "") + '" placeholder="Prénom">' +
+      '<label class="q-lbl">Ton avatar</label>' + obChoices("avatar", OB_AVATARS.map(a => ({ v: a, l: a }))),
+    validate: () => {
+      qa.name = ($("qi_name").value || "").trim();
+      if (!qa.name) return "Indique un prénom";
+      if (!qa.avatar) qa.avatar = "💪";
+      qa.color = OB_COLORS[Object.keys(customProfiles).length % OB_COLORS.length];
+      return null;
+    }
+  },
+  {
+    title: "Ton profil physique",
+    render: () => obChoices("sex", [{ v: "h", l: "Homme" }, { v: "f", l: "Femme" }]) +
+      obNum("age", "Âge", "30") + obNum("height", "Taille (cm)", "170") + obNum("weight", "Poids (kg)", "70") +
+      obNum("bodyFat", "Masse grasse % (optionnel)", "laisser vide si inconnu"),
+    validate: () => {
+      qa.age = parseInt($("qi_age").value, 10);
+      qa.height = parseInt($("qi_height").value, 10);
+      qa.weight = parseFloat($("qi_weight").value);
+      const bf = parseFloat($("qi_bodyFat").value);
+      qa.bodyFat = (bf > 3 && bf < 60) ? bf : null;
+      if (!qa.sex) return "Choisis une option";
+      if (!(qa.age > 13 && qa.age < 100)) return "Âge entre 14 et 99 ans";
+      if (!(qa.height > 120 && qa.height < 230)) return "Taille entre 120 et 230 cm";
+      if (!(qa.weight > 35 && qa.weight < 250)) return "Poids entre 35 et 250 kg";
+      return null;
+    }
+  },
+  {
+    title: "Ton objectif & ton quotidien",
+    render: () => '<label class="q-lbl">Objectif principal</label>' +
+      obChoices("goal", [{ v: "perte", l: "Perte de poids" }, { v: "forme", l: "Forme générale" }, { v: "masse", l: "Prise de masse" }]) +
+      '<label class="q-lbl">Activité quotidienne (hors sport)</label>' +
+      obChoices("activity", [
+        { v: "1.2", l: "Sédentaire", d: "bureau, < 30 min de marche/j" },
+        { v: "1.375", l: "Légèrement actif", d: "30-60 min de marche/j" },
+        { v: "1.55", l: "Modérément actif", d: "actif régulier dans la journée" },
+        { v: "1.725", l: "Très actif", d: "debout et en mouvement 6 h+/j" }
+      ]),
+    validate: () => {
+      if (!qa.goal) return "Choisis un objectif";
+      if (!qa.activity) return "Choisis ton niveau d'activité";
+      return null;
+    }
+  },
+  {
+    title: "Ton rythme de perte",
+    skip: () => qa.goal !== "perte",
+    render: () => {
+      const d = qa.deficit || 20;
+      return '<p class="q-p">Choisis ton déficit calorique. Capyra te dit la vérité : un déficit = une perte. La régularité fait le reste.</p>' +
+        '<input type="range" id="qi_deficit" min="5" max="35" value="' + d + '" class="q-range">' +
+        '<div class="q-rangeval" id="qi_defval"></div>' +
+        '<div class="q-alert" id="qi_defalert"></div>';
+    },
+    after: () => {
+      const upd = () => {
+        const d = parseInt($("qi_deficit").value, 10);
+        qa.deficit = d;
+        const b = { sex: qa.sex, age: qa.age, height: qa.height, weight: qa.weight, bodyFat: qa.bodyFat, activity: parseFloat(qa.activity), goal: "perte", deficit: d };
+        const t = calcTarget(b);
+        const loss = (t.tdee - t.target) * 30 / 7700;
+        $("qi_defval").textContent = "Déficit −" + d + "% → " + t.target + " kcal/j → ≈ " + loss.toFixed(1) + " kg perdus/mois";
+        $("qi_defalert").textContent = d < 10 ? "⚠️ Objectif trop faible pour produire des résultats significatifs."
+          : d > 25 ? "⚠️ Risque de carence et de perte musculaire — une consultation médicale est recommandée." : "";
+      };
+      $("qi_deficit").addEventListener("input", upd);
+      upd();
+    },
+    validate: () => { qa.deficit = parseInt($("qi_deficit").value, 10); return null; }
+  },
+  {
+    title: "Ton entraînement",
+    render: () => '<label class="q-lbl">Niveau</label>' +
+      obChoices("level", [{ v: "deb", l: "Débutant" }, { v: "int", l: "Intermédiaire" }, { v: "av", l: "Avancé" }]) +
+      '<label class="q-lbl">Durée de séance souhaitée</label>' +
+      obChoices("duration", [{ v: 15, l: "15 min" }, { v: 25, l: "25 min" }, { v: 35, l: "35 min" }, { v: 45, l: "45 min" }]) +
+      '<label class="q-lbl">Envie de boxe (shadow) ?</label>' +
+      obChoices("boxing", [{ v: true, l: "Oui 🥊" }, { v: false, l: "Non" }]),
+    validate: () => {
+      if (!qa.level) return "Choisis ton niveau";
+      if (!qa.duration) return "Choisis une durée";
+      if (qa.boxing === undefined) return "Boxe : oui ou non ?";
+      return null;
+    }
+  },
+  {
+    title: "Matériel & limitations",
+    render: () => '<label class="q-lbl">Matériel disponible (plusieurs choix possibles)</label>' +
+      obChoices("equip", [{ v: "kb", l: "Kettlebell 10 kg" }, { v: "sb", l: "Sandbag 30 kg" }, { v: "db", l: "Haltères 10 kg" }, { v: "band", l: "Élastiques" }], true) +
+      '<label class="q-lbl">Zones à ménager (plusieurs choix possibles)</label>' +
+      obChoices("injuries", [{ v: "épaule", l: "Épaule" }, { v: "genou", l: "Genou" }, { v: "dos", l: "Dos" }, { v: "cheville", l: "Cheville" }], true),
+    validate: () => { qa.equip = qa.equip || []; qa.injuries = qa.injuries || []; return null; }
+  },
+  {
+    title: "Ton alimentation (pour le futur volet nutrition)",
+    render: () => '<p class="q-p">Le volet nutrition Capyra arrive bientôt — tes réponses sont enregistrées dès maintenant.</p>' +
+      '<label class="q-lbl">Régime alimentaire</label>' +
+      obChoices("diet", [
+        { v: "standard", l: "Standard" }, { v: "vege", l: "Végétarien" }, { v: "vegan", l: "Vegan" },
+        { v: "kasher", l: "Kasher" }, { v: "halal", l: "Halal" }, { v: "sansgluten", l: "Sans gluten" }, { v: "sanslactose", l: "Sans lactose" }
+      ]) +
+      '<div id="qi_kosher" class="' + (qa.diet === "kasher" ? "" : "hidden") + '"><label class="q-lbl">Délai viande → laitages</label>' +
+      obChoices("kosherDelay", [{ v: "1h", l: "1 h" }, { v: "3h", l: "3 h" }, { v: "6h", l: "6 h" }]) + "</div>",
+    validate: () => { if (!qa.diet) return "Choisis un régime (Standard si aucun)"; return null; }
+  },
+  {
+    title: "Ton bilan Capyra 🦫",
+    render: () => {
+      const b = { sex: qa.sex, age: qa.age, height: qa.height, weight: qa.weight, bodyFat: qa.bodyFat, activity: parseFloat(qa.activity), goal: qa.goal, deficit: qa.deficit || 20 };
+      const imc = calcIMC(b), cat = imcCategory(imc), m = calcMacros(b);
+      let h = "<div class='c-row'><span>IMC</span><strong>" + imc.toFixed(1) + " — " + cat.lvl + " " + cat.cat + "</strong></div>";
+      if (cat.msg) h += "<div class='c-note'>" + cat.msg + "</div>";
+      h += "<div class='c-row'><span>Métabolisme de base</span><strong>" + m.bmr + " kcal/j</strong></div>";
+      h += "<div class='c-row'><span>Dépense quotidienne</span><strong>" + m.tdee + " kcal/j</strong></div>";
+      h += "<div class='c-row'><span>Objectif (" + m.label + ")</span><strong>" + m.target + " kcal/j</strong></div>";
+      h += "<div class='c-row'><span>Macros</span><strong>" + m.protG + "P · " + m.carbG + "G · " + m.fatG + "L (g)</strong></div>";
+      h += "<div class='c-note'>3 séances sur mesure vont être générées selon ton niveau, ton matériel et tes " + (qa.duration || 25) + " minutes. Programmes produits automatiquement — ils ne remplacent pas un avis médical.</div>";
+      return h;
+    },
+    nextLabel: "Créer mon profil 🦫",
+    validate: () => null
+  }
+];
+function obRender() {
+  const s = OB_STEPS[obStep];
+  $("obTitle").textContent = s.title;
+  $("obBody").innerHTML = s.render();
+  $("obErr").textContent = "";
+  $("obBack").classList.toggle("hidden", obStep === 0);
+  $("obNext").textContent = s.nextLabel || "Continuer →";
+  document.querySelectorAll("#obBody .q-choice").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const f = btn.dataset.f;
+      let v = btn.dataset.v;
+      if (v === "true") v = true; else if (v === "false") v = false;
+      else if (!isNaN(parseFloat(v)) && f !== "activity" && f !== "kosherDelay" && f !== "sex" && f !== "avatar") v = parseFloat(v);
+      if (btn.dataset.multi === "1") {
+        qa[f] = qa[f] || [];
+        const i = qa[f].indexOf(v);
+        i >= 0 ? qa[f].splice(i, 1) : qa[f].push(v);
+        btn.classList.toggle("sel");
+      } else {
+        qa[f] = v;
+        btn.parentElement.querySelectorAll(".q-choice").forEach(b => b.classList.remove("sel"));
+        btn.classList.add("sel");
+        if (f === "diet") $("qi_kosher") && $("qi_kosher").classList.toggle("hidden", v !== "kasher");
+      }
+    });
+  });
+  if (s.after) s.after();
+}
+function obNext() {
+  const s = OB_STEPS[obStep];
+  const err = s.validate();
+  if (err) { $("obErr").textContent = "⚠️ " + err; return; }
+  let i = obStep + 1;
+  while (i < OB_STEPS.length && OB_STEPS[i].skip && OB_STEPS[i].skip()) i++;
+  if (i >= OB_STEPS.length) {
+    const id = buildProfileFromQA(qa);
+    $("onboard").classList.add("hidden");
+    renderProfileScreen();
+    selectProfile(id);
+    return;
+  }
+  obStep = i;
+  obRender();
+}
+function obBack() {
+  let i = obStep - 1;
+  while (i > 0 && OB_STEPS[i].skip && OB_STEPS[i].skip()) i--;
+  obStep = Math.max(0, i);
+  obRender();
+}
+function obStart() {
+  qa = {};
+  obStep = 0;
+  $("onboard").classList.remove("hidden");
+  obRender();
 }
 
 /* ============ ÉVÉNEMENTS ============ */
@@ -1496,8 +1985,12 @@ $("repMinus").addEventListener("click", e => { e.stopPropagation(); addRep(-1); 
 $("vidBtn").addEventListener("click", e => e.stopPropagation());
 $("weightInput").addEventListener("change", e => {
   const v = parseFloat(e.target.value);
-  if (v > 30 && v < 250) { weight = v; savePrefs(); renderDurInfo(); }
+  if (v > 30 && v < 250) { weight = v; if (body) body.weight = v; savePrefs(); renderDurInfo(); renderDataPanel(); }
 });
+$("obNext").addEventListener("click", obNext);
+$("obBack").addEventListener("click", obBack);
+$("obCancel").addEventListener("click", () => $("onboard").classList.add("hidden"));
+bindDataPanel();
 $("btnProfile").addEventListener("click", showProfileScreen);
 document.querySelectorAll("#intensitySelect button").forEach(b =>
   b.addEventListener("click", () => selectIntensity(b.dataset.int)));
@@ -1552,5 +2045,6 @@ if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
 
 /* ============ INIT ============ */
 migrateOldStorage();
+loadCustomProfiles();
 applyTheme();
 renderProfileScreen();
