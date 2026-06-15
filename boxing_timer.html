@@ -167,12 +167,18 @@
   .total-remaining strong { color: var(--text); font-variant-numeric: tabular-nums; }
   .tap-hint { font-size: 0.7rem; color: var(--muted); opacity: .7; margin-top: 6px; }
   /* Compteur de répétitions */
-  .reps-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 0 0 12px; }
-  .reps-row button { border: none; cursor: pointer; font-family: "Poppins", sans-serif; font-weight: 700; }
-  #repPlus { background: var(--cta); color: #fff; border-radius: 14px; font-size: 1.2rem; padding: 10px 28px; }
-  #repMinus { background: var(--tile2); color: var(--text); border-radius: 10px; font-size: 1.1rem; padding: 9px 16px; }
-  .rep-val { font-family: "Poppins", sans-serif; font-variant-numeric: tabular-nums; font-size: 1.3rem; font-weight: 800; min-width: 70px; }
-  .rep-lbl { display: block; font-size: 0.6rem; color: var(--muted); font-weight: 500; }
+  .reps-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
+  .re-lbl { font-size: 0.8rem; color: var(--muted); }
+  .re-lbl strong { color: var(--text); }
+  .re-in {
+    width: 72px; background: var(--bg); color: var(--text); text-align: center;
+    border: 1px solid var(--border); border-radius: 10px; padding: 9px 6px;
+    font-size: 1rem; font-weight: 700; font-family: "Poppins", sans-serif;
+  }
+  .re-ok {
+    border: none; cursor: pointer; background: var(--cta); color: #fff;
+    border-radius: 10px; padding: 9px 18px; font-size: 1rem; font-weight: 700;
+  }
   .vol-title { font-size: 0.8rem; font-weight: 700; margin: 10px 0 4px; }
   .vol-list .v-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; padding: 4px 0; border-bottom: 1px solid var(--border); }
   .vol-list .v-row:last-child { border-bottom: none; }
@@ -332,6 +338,24 @@
   }
   #obBack { background: var(--tile2); color: var(--text); }
   #obNext { background: var(--cta); color: #fff; }
+  /* Nutrition */
+  .n-day { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; margin-top: 8px; }
+  .n-day summary { cursor: pointer; font-size: 0.9rem; }
+  .n-meal { padding: 8px 0 4px; border-bottom: 1px dashed var(--border); }
+  .n-meal:last-child { border-bottom: none; }
+  .n-meal-h { font-size: 0.85rem; }
+  .n-macros { float: right; color: var(--cta); font-size: 0.75rem; font-weight: 700; }
+  .n-k {
+    font-size: 0.62rem; background: var(--tile2); color: var(--muted);
+    border-radius: 999px; padding: 1px 7px; vertical-align: middle;
+  }
+  .n-ing { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+  .n-prep { font-size: 0.73rem; color: var(--sauge, #5F8F7B); font-style: italic; margin-top: 2px; }
+  .n-sub { margin-top: 10px; }
+  .n-sub summary { cursor: pointer; font-size: 0.85rem; font-weight: 700; }
+  .n-g { font-size: 0.82rem; padding: 3px 0; border-bottom: 1px solid var(--border); }
+  .n-g:last-child { border-bottom: none; }
+  #nGen { background: var(--cta); color: #fff; border: none; }
   /* Panneau Mes données */
   .calo-result { margin-top: 12px; }
   .c-row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.85rem; padding: 5px 0; border-bottom: 1px solid var(--border); }
@@ -344,6 +368,194 @@
     border: 1px solid var(--border); background: var(--tile);
     border-radius: 10px; font-size: 1.25rem; padding: 4px 10px; cursor: pointer;
   }
+  /* ============ NAVIGATION PAR ONGLETS ============ */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+    display: flex; background: var(--tile); border-top: 1px solid var(--border);
+    padding: 0; box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+  }
+  .tab-btn {
+    flex: 1; border: none; background: transparent; cursor: pointer;
+    padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-family: "Inter", sans-serif; font-size: 0.7rem; font-weight: 600;
+    color: var(--muted); transition: color .15s;
+  }
+  .tab-btn.active { color: var(--brand); }
+  .tab-btn .tab-icon { font-size: 1.4rem; line-height: 1; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  /* Espace pour la barre fixe en bas */
+  .app { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+
+  /* ============ VOLET NUTRITION — MISE EN PAGE ============ */
+  .nutr-hero {
+    background: linear-gradient(135deg, var(--brand) 0%, #8B6449 100%);
+    border-radius: 16px; padding: 18px 16px 14px; margin-bottom: 14px;
+  }
+  .nutr-hero-title {
+    font-family: "Poppins", sans-serif; font-size: 1rem; font-weight: 700;
+    color: #F4EDE6; margin-bottom: 2px;
+  }
+  .nutr-hero-sub { font-size: 0.78rem; color: rgba(244,237,230,0.75); margin-bottom: 12px; }
+  .nutr-section {
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px; margin-bottom: 12px; background: var(--tile);
+  }
+  .nutr-section-title {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted); margin-bottom: 14px;
+  }
+  /* Macro pills — hero version (sur fond brun) */
+  .macro-pills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .macro-pill {
+    background: rgba(255,255,255,0.15); border-radius: 10px;
+    padding: 10px 4px; text-align: center;
+  }
+  .macro-pill .mp-v {
+    font-family: "Poppins", sans-serif; font-size: 1.1rem; font-weight: 800;
+    color: #fff; line-height: 1.1;
+  }
+  .macro-pill .mp-l { font-size: 0.6rem; color: rgba(244,237,230,0.75); margin-top: 2px; }
+  /* Formulaire données corporelles — grille lisible */
+  .nutr-form-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .nutr-field { display: flex; flex-direction: column; gap: 4px; }
+  .nutr-field-label {
+    font-size: 0.72rem; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .nutr-field-wrap {
+    display: flex; align-items: center; gap: 5px;
+  }
+  .nutr-field input, .nutr-field select {
+    flex: 1; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 9px;
+    padding: 9px 10px; font-size: 0.9rem; font-family: inherit;
+    -webkit-appearance: none; appearance: none; min-width: 0;
+  }
+  .nutr-field select { padding-right: 28px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7468' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+  .nutr-field-unit { font-size: 0.78rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .nutr-field.full { grid-column: 1 / -1; }
+  /* Bouton objectif — sélecteur visuel */
+  .goal-select { display: flex; gap: 8px; }
+  .goal-btn {
+    flex: 1; border: 1.5px solid var(--border); border-radius: 10px;
+    background: var(--bg); color: var(--muted); padding: 8px 4px;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer; text-align: center;
+    transition: all .15s; font-family: inherit; line-height: 1.3;
+  }
+  .goal-btn.active { border-color: var(--brand); background: var(--highlight); color: var(--brand); }
+  .goal-btn .goal-icon { font-size: 1.1rem; display: block; margin-bottom: 2px; }
+  /* Déficit row */
+  .deficit-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.85rem; }
+  .deficit-row input {
+    width: 70px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 9px;
+    padding: 8px 10px; font-size: 0.9rem; font-family: inherit; text-align: center;
+  }
+  /* Résultat calorique */
+  .calo-result { margin-top: 14px; }
+  .calo-result .c-row { display: flex; justify-content: space-between; gap: 10px; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .calo-result .c-row:last-child { border-bottom: none; }
+  .calo-result .c-lbl { color: var(--muted); }
+  .calo-result .c-val { font-weight: 700; }
+  /* Bouton générer */
+  .nutr-gen-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  #nDiet {
+    flex: 1; min-width: 130px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 9px; padding: 10px 10px;
+    font-size: 0.85rem; font-family: inherit; -webkit-appearance: none; appearance: none;
+  }
+  #nGen {
+    background: var(--cta); color: #fff; border: none; border-radius: 9px;
+    padding: 10px 14px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    white-space: nowrap;
+  }
+  #nPpt {
+    background: var(--tile2); color: var(--text); border: none; border-radius: 9px;
+    padding: 10px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  /* Cartes journalières */
+  .day-card {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; margin-bottom: 10px;
+  }
+  .day-card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--tile2); cursor: pointer;
+    user-select: none;
+  }
+  .day-card-title {
+    font-family: "Poppins", sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--text);
+  }
+  .day-card-kcal { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .day-card-arrow { font-size: 0.75rem; color: var(--muted); transition: transform .2s; }
+  .day-card.open .day-card-arrow { transform: rotate(180deg); }
+  .day-card-body { display: none; padding: 0 12px 10px; }
+  .day-card.open .day-card-body { display: block; }
+  .meal-card {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .meal-card:last-child { border-bottom: none; }
+  .meal-slot-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--muted); margin-bottom: 3px;
+  }
+  .meal-name {
+    font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 5px;
+  }
+  .meal-macros { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 5px; }
+  .macro-chip {
+    font-size: 0.68rem; font-weight: 700; border-radius: 999px;
+    padding: 2px 8px; white-space: nowrap;
+  }
+  .mc-kcal { background: var(--highlight); color: var(--brand); }
+  .mc-p    { background: #E8F4EE; color: #3A7358; }
+  .mc-g    { background: #FFF3E0; color: #B05A00; }
+  .mc-l    { background: #F0ECFB; color: #5B3D9E; }
+  body[data-theme="dark"] .mc-p  { background: #1E3D2F; color: #6DBFA0; }
+  body[data-theme="dark"] .mc-g  { background: #3D2C00; color: #FFAA44; }
+  body[data-theme="dark"] .mc-l  { background: #2C1F4A; color: #B494F5; }
+  .meal-ing { font-size: 0.75rem; color: var(--muted); margin-bottom: 3px; line-height: 1.5; }
+  .meal-prep { font-size: 0.73rem; color: #5F8F7B; font-style: italic; line-height: 1.4; }
+  .n-k-chip {
+    font-size: 0.6rem; font-weight: 700; background: var(--tile2); color: var(--muted);
+    border-radius: 999px; padding: 1px 6px; vertical-align: middle; margin-left: 4px;
+  }
+  /* Liste de courses */
+  .grocery-section { margin-top: 10px; }
+  .grocery-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; background: var(--tile2); border-radius: 10px;
+    cursor: pointer; font-size: 0.85rem; font-weight: 700; user-select: none;
+    border: none; width: 100%; color: var(--text); font-family: inherit;
+  }
+  .grocery-body { padding: 8px 0 0; }
+  .grocery-body.hidden { display: none; }
+  .n-g { font-size: 0.82rem; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .n-g:last-child { border-bottom: none; }
+  /* Badge onglet */
+  .tab-btn { position: relative; }
+  .tab-badge {
+    position: absolute; top: 6px; right: calc(50% - 18px);
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cta); display: none;
+  }
+  .tab-badge.visible { display: block; }
+  /* Toggles sport dans accordéon discret */
+  .sport-settings-toggle {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--tile); color: var(--muted); padding: 8px 12px;
+    font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .sport-settings-body { display: none; }
+  .sport-settings-body.open { display: block; }
+
   @media (max-width: 420px) {
     .time-display { font-size: 3.4rem; }
     .program-select button { flex: 1 1 45%; }
@@ -374,6 +586,7 @@
 </div>
 
 <div class="app">
+  <!-- En-tête commun -->
   <div class="header">
     <div class="brand">
       <img src="logo.png" alt="Capyra">
@@ -385,163 +598,84 @@
     <button id="btnProfile" title="Changer de profil">👤</button>
   </div>
 
-  <div class="program-select" id="programSelect"></div>
+  <!-- ===== VOLET SPORT ===== -->
+  <div id="tabSport" class="tab-panel active">
 
-  <div class="toggles">
-    <button id="btnSound" class="on">🔊 Sons : activés</button>
-    <button id="btnVoice" class="on">🗣 Voix : activée</button>
-    <button id="btnVibe" class="on">📳 Vibreur : activé</button>
-    <button id="btnTheme">🌓 Thème : auto</button>
-  </div>
+    <div class="program-select" id="programSelect"></div>
 
-  <div class="intensity" id="intensitySelect">
-    <button data-int="facile">Facile</button>
-    <button data-int="normal" class="active">Normal</button>
-    <button data-int="difficile">Difficile</button>
-  </div>
-
-  <div class="intensity" id="durSelect">
-    <button data-dur="auto" class="active">Durée auto</button>
-    <button data-dur="15">15′</button>
-    <button data-dur="25">25′</button>
-    <button data-dur="35">35′</button>
-    <button data-dur="45">45′</button>
-  </div>
-  <div class="dur-info" id="durInfo"></div>
-  <div class="prog-banner" id="progBanner"></div>
-  <div class="equip-card" id="equipCard"></div>
-
-  <div id="mainView">
-    <div class="timer-card" id="timerCard" title="Touche pour pause / reprise">
-      <div class="phase-meta">
-        <span id="phaseCounter">Phase 1 / 1</span>
-        <span class="badge" id="phaseBadge">cardio</span>
+    <button class="sport-settings-toggle" id="sportSettingsBtn">
+      <span>⚙️ Réglages sons &amp; thème</span><span id="sportSettingsArrow">▼</span>
+    </button>
+    <div class="sport-settings-body" id="sportSettingsBody">
+      <div class="toggles">
+        <button id="btnSound" class="on">🔊 Sons : activés</button>
+        <button id="btnVoice" class="on">🗣 Voix : activée</button>
+        <button id="btnVibe" class="on">📳 Vibreur : activé</button>
+        <button id="btnTheme">🌓 Thème : auto</button>
       </div>
-      <div class="illu" id="illu"></div>
-      <div class="phase-name"><span id="phaseName">—</span> <a id="vidBtn" class="vid-btn hidden" target="_blank" rel="noopener" title="Voir la technique en vidéo">▶ vidéo</a></div>
-      <div class="phase-desc" id="phaseDesc"></div>
-      <div class="round-indicator" id="roundIndicator"></div>
-      <div class="capy-mode" id="capyMode"></div>
-      <div class="time-display" id="timeDisplay">00:00</div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="reps-row hidden" id="repsRow">
-        <button id="repMinus">−</button>
-        <div class="rep-val"><span id="repCount">0</span><span class="rep-lbl">reps comptées</span></div>
-        <button id="repPlus">+1</button>
-      </div>
-      <div class="total-remaining">Temps total restant : <strong id="totalRemaining">00:00</strong></div>
-      <div class="tap-hint">Touche le cadran pour mettre en pause / reprendre</div>
     </div>
 
-    <div class="controls">
-      <button id="btnMain">Démarrer</button>
-      <button id="btnSkip">Passer ⏭</button>
-      <button id="btnReset">↺</button>
+    <div class="intensity" id="intensitySelect">
+      <button data-int="facile">Facile</button>
+      <button data-int="normal" class="active">Normal</button>
+      <button data-int="difficile">Difficile</button>
     </div>
 
-    <div class="phase-list-title">Déroulé de la séance</div>
-    <div class="phase-list" id="phaseList"></div>
-
-    <details class="stats" id="musicDetails">
-      <summary>🎵 Musique</summary>
-      <div class="m-row">
-        <input type="text" id="ytUrl" placeholder="URL YouTube (vidéo ou playlist)">
-        <button id="btnYtLoad">Charger</button>
-      </div>
-      <div id="ytWrap"></div>
-      <div class="m-row">
-        <label for="musicFiles" style="font-size:.82rem">Ou fichiers locaux :</label>
-        <input type="file" id="musicFiles" accept="audio/*" multiple>
-      </div>
-      <div class="m-row">
-        <button id="btnMusic">▶ Lecture musique</button>
-        <span id="musicNow" style="font-size:.78rem;color:var(--muted)"></span>
-      </div>
-      <div class="m-note">Le volume baisse automatiquement pendant les annonces vocales. L'appli YouTube Music ne peut pas être pilotée directement (limite imposée par Google) — colle ici une playlist YouTube classique, ou lance simplement ta musique en arrière-plan : les bips se superposent sans la couper.</div>
-    </details>
-
-    <details class="stats" id="editorDetails">
-      <summary>✏️ Mes séances personnalisées</summary>
-      <div class="m-row">
-        <select id="edSelect"><option value="">— Nouvelle séance —</option></select>
-        <button id="btnEdDup">Dupliquer la séance affichée</button>
-      </div>
-      <input type="text" id="edName" placeholder="Nom de la séance">
-      <div id="edPhases"></div>
-      <div class="ed-actions">
-        <button id="btnEdAddPhase">+ Phase</button>
-        <button id="btnEdSave">💾 Enregistrer</button>
-        <button id="btnEdDelete" class="hidden">🗑 Supprimer</button>
-      </div>
-      <div class="m-note">Tags : shadow (boxe technique), round (round chrono), circuit (renfo), cardio, rest (repos). Durées en secondes.</div>
-    </details>
-
-    <details class="stats" id="dataDetails">
-      <summary>📊 Mes données &amp; calories</summary>
-      <div class="m-row">
-        <select id="dSex"><option value="h">Homme</option><option value="f">Femme</option></select>
-        <input type="number" id="dAge" min="14" max="99" style="width:64px" title="Âge"> ans ·
-        <input type="number" id="dHeight" min="120" max="230" style="width:70px" title="Taille"> cm ·
-        <input type="number" id="dWeight" min="35" max="250" step="0.5" style="width:70px" title="Poids"> kg
-      </div>
-      <div class="m-row">
-        <label style="font-size:.8rem">Masse grasse % (opt.) :</label>
-        <input type="number" id="dFat" min="3" max="60" step="0.5" style="width:64px">
-        <select id="dActivity" title="Activité quotidienne">
-          <option value="1.2">Sédentaire</option>
-          <option value="1.375">Légèrement actif</option>
-          <option value="1.55">Modérément actif</option>
-          <option value="1.725">Très actif</option>
-          <option value="1.9">Extrêmement actif</option>
-        </select>
-      </div>
-      <div class="m-row">
-        <select id="dGoal">
-          <option value="perte">Perte de poids</option>
-          <option value="forme">Forme générale</option>
-          <option value="masse">Prise de masse</option>
-        </select>
-        <span id="dDeficitRow">Déficit : <input type="number" id="dDeficit" min="5" max="35" style="width:60px"> %</span>
-      </div>
-      <div class="calo-result" id="caloResult"></div>
-    </details>
-
-    <details class="stats" id="statsDetails">
-      <summary>📊 Historique &amp; statistiques</summary>
-      <div class="stats-grid" id="statsGrid">
-        <div class="stat-tile"><div class="v" id="statSessions">0</div><div class="l">Séances</div></div>
-        <div class="stat-tile"><div class="v" id="statTime">0 min</div><div class="l">Temps cumulé</div></div>
-        <div class="stat-tile"><div class="v" id="statWeek">0</div><div class="l">Cette semaine</div></div>
-        <div class="stat-tile"><div class="v" id="statStreak">0</div><div class="l">Série (semaines)</div></div>
-        <div class="stat-tile"><div class="v" id="statRounds">0</div><div class="l">Rounds de boxe</div></div>
-        <div class="stat-tile"><div class="v" id="statLevel">+0 s</div><div class="l">Progression</div></div>
-        <div class="stat-tile"><div class="v" id="statKcal">0</div><div class="l">kcal brûlées</div></div>
-      </div>
-      <div class="m-row">
-        <label for="weightInput" style="font-size:.82rem">⚖️ Poids :</label>
-        <input type="number" id="weightInput" min="30" max="250" step="0.5" style="width:80px"> kg
-        <span style="font-size:.72rem;color:var(--muted)">— sert à l'estimation des calories</span>
-      </div>
-      <div class="stats-split" id="statsSplit"></div>
-      <div class="vol-title hidden" id="volTitle">💪 Volume par exercice (reps comptées)</div>
-      <div class="vol-list" id="volList"></div>
-      <div class="hist-list" id="histList"></div>
-      <button id="btnClearHist">Effacer l'historique</button>
-    </details>
-  </div>
-
-  <div class="finish-screen" id="finishScreen">
-    <div class="emoji">🏆</div>
-    <h2>Séance terminée !</h2>
-    <p id="finishMsg">Bien joué. Hydrate-toi et récupère.</p>
-    <textarea id="noteInput" placeholder="Note de séance : ressenti, charges, douleurs… (optionnel)"></textarea>
-    <div class="f-actions">
-      <button id="btnSaveNote">Enregistrer la note</button>
-      <button id="btnRestart">Recommencer</button>
+    <div class="intensity" id="durSelect">
+      <button data-dur="auto" class="active">Durée auto</button>
+      <button data-dur="15">15′</button>
+      <button data-dur="25">25′</button>
+      <button data-dur="35">35′</button>
+      <button data-dur="45">45′</button>
     </div>
-  </div>
-</div>
+    <div class="dur-info" id="durInfo"></div>
+    <div class="prog-banner" id="progBanner"></div>
+    <div class="equip-card" id="equipCard"></div>
 
-<script src="app.js"></script>
-</body>
-</html>
+    <div id="mainView">
+      <div class="timer-card" id="timerCard" title="Touche pour pause / reprise">
+        <div class="phase-meta">
+          <span id="phaseCounter">Phase 1 / 1</span>
+          <span class="badge" id="phaseBadge">cardio</span>
+        </div>
+        <div class="illu" id="illu"></div>
+        <div class="phase-name"><span id="phaseName">—</span> <a id="vidBtn" class="vid-btn hidden" target="_blank" rel="noopener" title="Voir la technique en vidéo">▶ vidéo</a></div>
+        <div class="phase-desc" id="phaseDesc"></div>
+        <div class="round-indicator" id="roundIndicator"></div>
+        <div class="capy-mode" id="capyMode"></div>
+        <div class="time-display" id="timeDisplay">00:00</div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="reps-row rep-entry hidden">
+          <span class="re-lbl">Reps faites — <strong class="re-name"></strong> :</span>
+          <input type="number" class="re-in" min="1" max="499" placeholder="12">
+          <button class="re-ok">✓</button>
+        </div>
+        <div class="total-remaining">Temps total restant : <strong id="totalRemaining">00:00</strong></div>
+        <div class="tap-hint">Touche le cadran pour mettre en pause / reprendre</div>
+      </div>
+
+      <div class="controls">
+        <button id="btnMain">Démarrer</button>
+        <button id="btnSkip">Passer ⏽</button>
+        <button id="btnReset">↺</button>
+      </div>
+
+      <div class="phase-list-title">Déroulé de la séance</div>
+      <div class="phase-list" id="phaseList"></div>
+
+      <details class="stats" id="musicDetails">
+        <summary>🎵 Musique</summary>
+        <div class="m-row">
+          <input type="text" id="ytUrl" placeholder="URL YouTube (vidéo ou playlist)">
+          <button id="btnYtLoad">Charger</button>
+        </div>
+        <div id="ytWrap"></div>
+        <div class="m-row">
+          <label for="musicFiles" style="font-size:.82rem">Ou fichiers locaux :</label>
+          <input type="file" id="musicFiles" accept="audio/*" multiple>
+        </div>
+        <div class="m-row">
+          <button id="btnMusic">▶ Lecture musique</button>
+          <span id="musicNow" style="font-size:.78rem;color:var(--muted)"></span>
+        </div>
+        <div class="m-note">Le volume baisse automatiquement pendant les annonces vocales. L'appli YouTube Music ne peut pas être pilotée directement (limite imposée par Google) — colle ici une playlist YouTube classique, ou lance simplement ta musique en arrière-plan : le
